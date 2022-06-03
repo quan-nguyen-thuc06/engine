@@ -239,6 +239,7 @@ class GameOverScreen extends Scene {
         return 2;
     }
 }
+
 var startScreen = new StartScreen();
 startScreen.addChild([bg,imgStart],[],[]);
 var gameOverScreen = new GameOverScreen();
