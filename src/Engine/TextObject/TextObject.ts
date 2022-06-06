@@ -1,0 +1,10 @@
+import {GameObject} from "../GameObject/GameObject"
+export class TextObject extends GameObject{
+    content: string;
+    font: string;
+    constructor(x: number, y: number, name: string , content: string, font: string){
+        super(x, y, 0, 0, name);
+        this.content = content;
+        this.font = font;
+    }
+}

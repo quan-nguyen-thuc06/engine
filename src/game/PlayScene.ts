@@ -1,87 +1,10 @@
-import {GameObject,ButtonObject, Sprite, Scene, ImageObject,Renderer, SceneManager, Game, TextObject} from "./Engine"
-var numPipe = 4;
-var distance = 250;
-var pipeWidth = 80;
-var blanks = 300;
-const pipeHeight = 350;
-const fps = 60;
-class Bird extends Sprite {
-    gravity : number;
-    speed : number;
-    pfs: number;
-    rate: number;
-    adt: number;  
-    constructor(x: number, y: number, width: number, height: number,images: Array<string>,degrees: number,gravity: number,speed: number){
-        super(x, y, width, height,images,degrees,"bird");
-        this.gravity = gravity;
-        this.speed = speed;
-        this.pfs = 60;
-        this.rate = 1.0/this.pfs*1000;
-        this.adt = 0.0;
-    }
-    update(time: number, deltaTime:number){
-        this.y += this.speed + 0.5*this.gravity;
-        this.speed += this.gravity;
-        this.adt += deltaTime
-        if(this.speed>0){
-            this.degrees = 20;
-        }
-        else{
-            this.degrees = -20;
-            if(this.adt>=this.rate){
-                this.adt -= this.rate;
-                this.fameCurrent+=1;
-                if(this.fameCurrent>this.images.length-1){
-                    this.fameCurrent = 0;
-                }
-            }
-            if(this.fameCurrent>this.images.length){
-                this.fameCurrent = 0;
-            }
-        }
-    }
-    fly(){
-        this.speed = -8 ;
-    }
-}
-class Score{
-    private highScore: number;
-    private currentScore: number;
-    constructor(){
-        this.highScore = 0;
-        this.currentScore = 0;
-    }
-    setCurrentScore(score: number){
-        this.currentScore = score;
-    }
-    getCurrentScore(){
-        return this.currentScore;
-    }
-    getHighScore(){
-        return this.highScore;
-    }
-    setHighScore(highScore: number){
-        this.highScore = highScore;
-    }
-    
-}
-class PairOfPipe{
-    Pipes: Array<ImageObject>;
-    private speed: number;
-    constructor(x:number, y:number, image: string,speed: number){
-        var PipeUp = new ImageObject(x,y,pipeWidth,pipeHeight,image,180,"pipe");
-        var PipeDown = new ImageObject(x,y+pipeHeight+blanks,pipeWidth,pipeHeight,image,0,"pipe");
-        var checkScore = new ImageObject(x+pipeWidth,y+pipeHeight,10,blanks," ",0,"checkScore");
-        this.Pipes= [PipeUp,PipeDown,checkScore];
-        this.speed = speed;
-    }
-    update(){
-        for(var i = 0; i <3;i++){
-            this.Pipes[i].x -= this.speed;
-        }
-    }
-}
-var imgBird = [
+import {Scene} from '../Engine/Scene/Scene';
+import { Bird } from './Bird';
+import {PairOfPipe} from './PairOfPipe';
+import { TextObject } from '../Engine/TextObject/TextObject';
+import {ButtonObject } from '../Engine/ButtonObject/ButtonObject';
+import { ImageObject } from '../Engine/ImageObject/ImageObject';
+const imgBird = [
     "../Images/bird/frame-1.png",
     "../Images/bird/frame-2.png",
     "../Images/bird/frame-3.png",
@@ -91,6 +14,10 @@ var imgBird = [
     "../Images/bird/frame-7.png",
     "../Images/bird/frame-8.png",
 ];
+const numPipe = 4;
+const distance = 250;
+const pipeWidth = 80;
+const fps = 60;
 class PlayScene extends Scene {
     fps: number;
     rate: number;
@@ -247,40 +174,3 @@ class PlayScene extends Scene {
         console.log("rendering");
     }
 }
-
-var bg = new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background");
-var ground = new ImageObject(0,670,700,150,"../Images/base.png",0,"ground");
-var imgStart = new ImageObject(50,20,500,700,"../Images/message.png",0,"");
-class StartScreen extends Scene {
-    update(time: number, delta: number){
-        if(this.inputKey==="Enter") {
-            this.inputKey = "";
-            return 1;
-        }
-        return 0;
-    }
-}
-// class GameOverScreen extends Scene {
-//     update(time: number, delta: number){
-//         if(this.inputKey==="Enter") {
-//             this.inputKey = "";
-//             // window.location.reload();
-//             return 1;
-//         }
-//         return 2;
-//     }
-// }
-
-var startScreen = new StartScreen();
-startScreen.addChild([bg,imgStart],[],[]);
-// var gameOverScreen = new GameOverScreen();
-// gameOverScreen.addChild([bg,imgStart],[],[]);
-const canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
-var render = new Renderer(canvas)
-var gamePlay = new PlayScene();
-var gameScene = new SceneManager();
-gameScene.addScene(startScreen);
-gameScene.addScene(gamePlay);
-// gameScene.addScene(gameOverScreen);
-var myGame = new Game(gameScene);
-myGame.start(render);

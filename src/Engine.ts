@@ -33,6 +33,16 @@ class ImageObject extends GameObject{
     update(time: number, deltaTime:number){}
 }
 
+class ButtonObject extends ImageObject{
+    constructor(x: number, y: number, width: number, height: number,image: string, degrees: number, name: string){
+        super(x, y, width, height,image, degrees, name);
+    }
+    isInside(pos: Array<number>){
+        if(pos.length < 2) return false;
+        return pos[0] > this.x && pos[0] < this.x+this.width && pos[1] < this.y+this.height && pos[1] > this.y;
+        return 1;
+    }    
+}
 class Sprite extends GameObject{
     images: Array<string>;
     degrees: number;
@@ -90,7 +100,15 @@ class Scene{
     sprites: Sprite[];
     textObjects: TextObject[]; 
     inputKey : String;
+    mouseEvent : Array<number> | null;
     constructor(){
+        this.imageObjects = [];
+        this.sprites = [];
+        this.textObjects = [];
+        this.inputKey = "";
+        this.mouseEvent = null;
+    }
+    resetScene(){
         this.imageObjects = [];
         this.sprites = [];
         this.textObjects = [];
@@ -139,7 +157,22 @@ class Scene{
         this.inputKey = e.code;
         console.log(this.inputKey);
     }
-    resetScene(){}
+    handleMouseDown(e: MouseEvent, canvas: HTMLCanvasElement) {
+        var rect = canvas.getBoundingClientRect();
+        var mouseX = e.clientX - rect.left;
+        var mouseY = e.clientY - rect.top;    
+        this.mouseEvent = [mouseX, mouseY];
+        // this.mouseEvent.clientX = 3;
+        console.log(this.mouseEvent);
+    }
+    Collision(obj1 : GameObject, obj2 : GameObject){
+        if(obj1.x+ obj1.width>=obj2.x && obj1.x <= obj2.x + obj2.width){
+            if(obj1.y+ obj1.height>=obj2.y && obj1.y <= obj2.y + obj2.height){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 class SceneManager {
@@ -166,6 +199,7 @@ class Game{
     
     start(render: Renderer){
         document.addEventListener('keyup',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene].handleInputEvent(e));
+        document.addEventListener('click',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene].handleMouseDown(e,render.canvas));
         requestAnimationFrame(()=>this.loop(render));
     }
     loop(render: Renderer){
@@ -182,8 +216,8 @@ class Game{
             this.sceneManager.scenes[this.sceneManager.currentScene].render(render);
         }
         if(indexScene!=this.sceneManager.currentScene){
-            // this.sceneManager.scenes[this.sceneManager.currentScene].resetScene();
             this.loadScene(indexScene);
+            this.sceneManager.scenes[indexScene].resetScene();
         }
         this.lastTime = time;
         requestAnimationFrame(()=>this.loop(render));
@@ -193,12 +227,4 @@ class Game{
     }
 }
 
-function Collision(obj1 : GameObject, obj2 : GameObject){
-    if(obj1.x+ obj1.width>=obj2.x && obj1.x <= obj2.x + obj2.width){
-        if(obj1.y+ obj1.height>=obj2.y && obj1.y <= obj2.y + obj2.height){
-            return true;
-        }
-    }
-    return false;
-}
-export {GameObject,ImageObject,Renderer, SceneManager, Sprite,Game,Scene,Collision,TextObject};
+export {GameObject,ImageObject,Renderer, SceneManager, Sprite,Game,Scene,TextObject,ButtonObject};
