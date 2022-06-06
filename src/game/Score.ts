@@ -1,4 +1,4 @@
-class Score{
+export class Score{
     private highScore: number;
     private currentScore: number;
     constructor(){

@@ -1,4 +1,5 @@
 import { Sprite } from "../Engine/Sprite/Sprite";
+var audio = new Audio("../audio/swoosh.mp3");
 export class Bird extends Sprite {
     gravity : number;
     speed : number;
@@ -35,6 +36,9 @@ export class Bird extends Sprite {
         }
     }
     fly(){
+        audio.play(); 
+        audio.playbackRate = 2;
         this.speed = -8 ;
+        // audio.pause();
     }
 }

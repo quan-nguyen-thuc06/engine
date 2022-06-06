@@ -1,6 +1,6 @@
 import { ImageObject } from "../Engine/ImageObject/ImageObject";
 var pipeWidth = 80;
-var blanks = 300;
+var blanks = 200;
 const pipeHeight = 350;
 export class PairOfPipe{
     Pipes: Array<ImageObject>;
