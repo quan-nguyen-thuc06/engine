@@ -1,4 +1,4 @@
-export class Score{
+class Score{
     private highScore: number;
     private currentScore: number;
     constructor(){
@@ -17,5 +17,7 @@ export class Score{
     setHighScore(highScore: number){
         this.highScore = highScore;
     }
-    
 }
+
+var score = new Score();
+export {score,Score};

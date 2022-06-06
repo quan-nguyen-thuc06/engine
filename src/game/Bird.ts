@@ -1,6 +1,6 @@
 import { Sprite } from "../Engine/Sprite/Sprite";
 var audio = new Audio("../audio/swoosh.mp3");
-export class Bird extends Sprite {
+class Bird extends Sprite {
     gravity : number;
     speed : number;
     pfs: number;
@@ -42,4 +42,20 @@ export class Bird extends Sprite {
         audio.playbackRate = 2;
         this.speed = -5 ;
     }
+    reset(){
+        super.reset();
+        this.speed = 0;
+    }
 }
+const imgBird = [
+    "../Images/bird/frame-1.png",
+    "../Images/bird/frame-2.png",
+    "../Images/bird/frame-3.png",
+    "../Images/bird/frame-4.png",
+    "../Images/bird/frame-5.png",
+    "../Images/bird/frame-6.png",
+    "../Images/bird/frame-7.png",
+    "../Images/bird/frame-8.png",
+];
+var bird = new Bird(100,30,50,50,imgBird,0,0.5,0.1);
+export default bird;

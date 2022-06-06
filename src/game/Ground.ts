@@ -17,6 +17,13 @@ export class Ground{
             }
         } 
     }
+    getComponent(){
+        return {
+            "imageObjects": this.images,
+            "sprites": [],
+            "textObjects": []
+        };
+    }
     reset(){
         for(var i=0;i<this.images.length;i++){
             this.images[i].reset();

@@ -9,4 +9,7 @@ export class TextObject extends GameObject{
         this.font = font;
         this.color = color;
     }
+    setContent(content: string){
+        this.content = content;
+    }
 }

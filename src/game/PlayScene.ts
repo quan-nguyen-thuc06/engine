@@ -1,73 +1,71 @@
 import {Scene} from '../Engine/Scene/Scene';
-import { Bird } from './Bird';
-import {PairOfPipe} from './PairOfPipe';
+import bird from './Bird';
+import {PairOfPipe, listPairOfPipes} from './PairOfPipe';
 import { TextObject } from '../Engine/TextObject/TextObject';
-import {ButtonObject } from '../Engine/ButtonObject/ButtonObject';
 import { ImageObject } from '../Engine/ImageObject/ImageObject';
-import {Score} from "./Score";
+import {score} from "./Score";
 import { Ground } from './Ground';
+import {panelGameOver} from './PanelGameOver'
 
-var point = new Audio("../audio/point.mp3");
-var die = new Audio("../audio/die.mp3");
-var hit = new Audio("../audio/hit.mp3");
-var audioPlayer = new Audio("../audio/orchestrawav-26158.mp3");
-const imgBird = [
-    "../Images/bird/frame-1.png",
-    "../Images/bird/frame-2.png",
-    "../Images/bird/frame-3.png",
-    "../Images/bird/frame-4.png",
-    "../Images/bird/frame-5.png",
-    "../Images/bird/frame-6.png",
-    "../Images/bird/frame-7.png",
-    "../Images/bird/frame-8.png",
-];
-const numPipe = 4;
-const distance = 250;
-const pipeWidth = 80;
+const point = new Audio("../audio/point.mp3");
+const die = new Audio("../audio/die.mp3");
+const hit = new Audio("../audio/hit.mp3");
+const audioPlayer = new Audio("../audio/orchestrawav-26158.mp3");
+
 const fps = 60;
 export class PlayScene extends Scene {
     fps: number;
     rate: number;
     adt: number;    //accumulated delta time
-    bird: Bird;
-    pipes: PairOfPipe[];
+    bird = bird;
+    pipes = listPairOfPipes;
     ground: Ground;
     checkPipe: boolean;
     textScore: TextObject;
     addScore: number | null;
-    score: Score;
+    score = score;
     deadBird: boolean;
-    buttonReplay: ButtonObject;
+    panelGameOver = panelGameOver;
     constructor(){
+        super();
+        // play audio
         audioPlayer.play();
         audioPlayer.loop =true;
-        super();
-        this.buttonReplay = new ButtonObject(225,500,160,80,"../Images/replay-button.png",0,"replayButton");
+
         this.fps = fps;
         this.rate = 1.0/fps*1000;
         this.adt = 0.0;
         this.checkPipe = false;
         this.addScore = null;
         this.deadBird = false;
-        this.score = new Score();
         this.ground = new Ground(2);
+
         this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial", "white");
-        var bird = new Bird(100,30,50,50,
-            imgBird,0,0.5,0.1
-            );
-        this.bird = bird;
         var bg = new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background");
-        this.pipes = []
-        this.addChild([bg],[bird],[this.textScore]);
-        for(var i=0;i<numPipe;i++){
-            var x = i*distance + pipeWidth + 400;
-            var y = Math.floor(Math.random() *-200);
-            var pipe = new PairOfPipe(x,y,"../Images/pipe-green.png",2);
-            this.pipes.push(pipe);
-            this.addChild([pipe.Pipes[0],pipe.Pipes[1],pipe.Pipes[2]],[],[]);
+
+        this.addChild([bg],[this.bird],[this.textScore]);
+        for(var i=0;i<listPairOfPipes.listPipe.length;i++){
+            var pipe = listPairOfPipes.listPipe[i];
+            this.addChild(
+                pipe.getComponent()["imageObjects"],
+                pipe.getComponent()["sprites"],
+                pipe.getComponent()["textObjects"]
+            );
         }
-        this.addChild([this.ground.images[0],this.ground.images[1]],[],[]);
-        console.log(this.sprites.length);
+
+        this.addChild(
+            this.ground.getComponent()["imageObjects"],
+            this.ground.getComponent()["sprites"],
+            this.ground.getComponent()["textObjects"]
+        );
+
+        // hiden panelGameOver
+        this,panelGameOver.setActive(false);
+        this.addChild(
+            this.panelGameOver.getComponent()["imageObjects"],
+            this.panelGameOver.getComponent()["sprites"],
+            this.panelGameOver.getComponent()["textObjects"]
+        );
     }
     
     update(time: number, deltaTime: number) {
@@ -76,6 +74,7 @@ export class PlayScene extends Scene {
             var ground = this.imageObjects.filter((imb)=>{
                 return imb.name === "ground";
                 });
+            
             var pipes = this.imageObjects.filter((imb)=>{
                 return imb.name === "pipe";
                 });
@@ -106,25 +105,27 @@ export class PlayScene extends Scene {
                                 break;
                             }
                         }
-                        this.pipes.map((pipe) => {
+                        this.pipes.listPipe.map((pipe) => {
                             pipe.update();
                         });
                         this.sprites[i].update(time,deltaTime);
                         if(this.inputKey==="Space") {
                             this.bird.fly();
-                            // this.inputKey = "";
                         }
                         else if(this.checkPipe&&(!this.Collision(ground[0], this.sprites[i])&&!this.Collision(ground[1], this.sprites[i])))
                             this.sprites[i].update(time,deltaTime);
+                        console.log("test", ground)
                         if(this.Collision(ground[0], this.sprites[i])||this.Collision(ground[1], this.sprites[i])||this.checkPipe){
                             if(this.score.getCurrentScore()> this.score.getHighScore())
                                 this.score.setHighScore(this.score.getCurrentScore());
-                            console.log("Score: " + this.score.getCurrentScore() + "High Score: " + this.score.getHighScore());
-                            var imgGameOver = new ImageObject(60,300,500,130,"../Images/gameover.png",0,"gameOver");
-                            var Score = new TextObject(110,470,"showScore","Score: "+ this.score.getCurrentScore(), "30px Arial","white");
-                            var highScore = new TextObject(330,470,"highScore","High Score: "+ this.score.getHighScore(), "30px Arial","white");
-                            this.addChild([imgGameOver,this.buttonReplay],[],[Score,highScore]);
+                            // show panelGameOver
+                            this.panelGameOver.setActive(true);
+                            // update score
+                            this.panelGameOver.update(this.score.getCurrentScore(), this.score.getHighScore());
+                            // set state bird is die
                             this.deadBird = true;
+
+                            // play audio
                             audioPlayer.pause();
                             hit.play();
                             setTimeout(function() {
@@ -136,26 +137,13 @@ export class PlayScene extends Scene {
                     else
                         this.sprites[i].update(time,deltaTime);
                 }
-                
-                this.pipes.map((pipe,index) =>{
-                    if(pipe.Pipes[0].x<-100){
-                        var frontIndex = index -1;
-                        if(frontIndex<0) frontIndex = this.pipes.length-1;
-                        for(var i = 0; i <pipe.Pipes.length;i++){
-                            pipe.Pipes[i].x = this.pipes[frontIndex].Pipes[i].x + distance;
-                        }
-                    }
-                })
+                this.pipes.update();
             }
         }
         else if(this.deadBird){
-            if(this.inputKey === "Enter"||(this.mouseEvent!=null&& this.buttonReplay.isInside(this.mouseEvent))){
+            if(this.inputKey === "Enter"||(this.mouseEvent!=null&& this.panelGameOver.replayButton.isInside(this.mouseEvent))){
                 this.deadBird = false;
-                this.removeChild([this.buttonReplay],[]);
-                this.imageObjects.pop();
-                this.imageObjects.pop();
-                this.textObjects.pop();
-                this.textObjects.pop();
+                this.panelGameOver.setActive(false);
                 this.resetScene();
             }
         }
@@ -164,31 +152,16 @@ export class PlayScene extends Scene {
     resetScene(){
         audioPlayer.play();
         audioPlayer.loop =true;
-        // super.resetScene();
         this.checkPipe = false;
         this.addScore = null;
+        super.resetScene();
         this.score.setCurrentScore(0);
         this.bird.reset();
         this.ground.reset();
-        this.deadBird = false;
-        // this.ground = new Ground(2);
-        // this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial","white");
-        // var bird = new Bird(100,30,50,50,
-        //     imgBird,0,0.5,0.1
-        //     );
-        // this.bird = bird;
-        // var bg = new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background",);
-        // this.pipes = []
-        // this.addChild([bg],[bird],[this.textScore]);
-        for(var i=0;i<numPipe;i++){
-            // var x = i*distance + pipeWidth + 400;
-            // var y = Math.floor(Math.random() *-200);
-            // var pipe = new PairOfPipe(x,y,"../Images/pipe-green.png",2);
-            // this.pipes.push(pipe);
-            // this.addChild([pipe.Pipes[0],pipe.Pipes[1],pipe.Pipes[2]],[],[]);
-            this.pipes[i].reset();
+        this.textScore.setContent("Score: 0");
+        for(var i=0;i<this.pipes.listPipe.length;i++){
+            this.pipes.listPipe[i].reset();
         }
-        // this.addChild([this.ground.images[0],this.ground.images[1]],[],[]);
         console.log("rendering");
     }
 }

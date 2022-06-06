@@ -10,10 +10,10 @@ export class Game{
     }
     
     start(render: Renderer){
-        document.addEventListener('keydown',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene]._onKeyDown(e));
-        document.addEventListener('keyup',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene]._onKeyUp(e));
-        document.addEventListener('mousedown',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene]._onMouseDown(e,render.canvas));
-        document.addEventListener('mouseup',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene]._onMouseUp(e));
+        document.addEventListener('keydown',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene].onKeyDown(e));
+        document.addEventListener('keyup',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene].onKeyUp());
+        document.addEventListener('mousedown',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene].onMouseDown(e,render.canvas));
+        document.addEventListener('mouseup',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene].onMouseUp());
         requestAnimationFrame(()=>this.loop(render));
     }
     
