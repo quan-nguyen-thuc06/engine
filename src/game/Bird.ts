@@ -16,6 +16,8 @@ class Bird extends Sprite {
     }
     update(time: number, deltaTime:number){
         this.y += this.speed + 0.5*this.gravity;
+        if(this.y < 0)
+            this.y = 0;
         this.speed += this.gravity;
         this.adt += deltaTime
         if(this.speed>0){
