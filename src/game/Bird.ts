@@ -10,7 +10,7 @@ class Bird extends Sprite {
         super(x, y, width, height,images,degrees,"bird");
         this.gravity = gravity;
         this.speed = speed;
-        this.pfs = 80;
+        this.pfs = 60;
         this.rate = 1.0/this.pfs*1000;
         this.adt = 0.0;
     }
