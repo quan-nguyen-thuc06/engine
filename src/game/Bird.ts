@@ -10,7 +10,7 @@ export class Bird extends Sprite {
         super(x, y, width, height,images,degrees,"bird");
         this.gravity = gravity;
         this.speed = speed;
-        this.pfs = 60;
+        this.pfs = 80;
         this.rate = 1.0/this.pfs*1000;
         this.adt = 0.0;
     }
@@ -19,10 +19,12 @@ export class Bird extends Sprite {
         this.speed += this.gravity;
         this.adt += deltaTime
         if(this.speed>0){
-            this.degrees = 20;
+            this.degrees += 1;
+            if(this.degrees>20) this.degrees = 20;
         }
         else{
-            this.degrees = -20;
+            this.degrees -= 1;
+            if(this.degrees<-20) this.degrees = -20;
             if(this.adt>=this.rate){
                 this.adt -= this.rate;
                 this.fameCurrent+=1;
@@ -38,7 +40,6 @@ export class Bird extends Sprite {
     fly(){
         audio.play(); 
         audio.playbackRate = 2;
-        this.speed = -8 ;
-        // audio.pause();
+        this.speed = -5 ;
     }
 }

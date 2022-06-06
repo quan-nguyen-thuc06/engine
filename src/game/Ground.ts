@@ -17,4 +17,9 @@ export class Ground{
             }
         } 
     }
+    reset(){
+        for(var i=0;i<this.images.length;i++){
+            this.images[i].reset();
+        } 
+    }
 }

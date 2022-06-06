@@ -36,6 +36,7 @@ export class Renderer{
         const ctx = this.canvas.getContext('2d');
         if(ctx!=null){
             ctx.font = text.font;
+            ctx.fillStyle = text.color;
             ctx.fillText(text.content,text.x,text.y);
         }
     }

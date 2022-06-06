@@ -61,17 +61,25 @@ export class Scene{
         }
         return 1;
     }
-    handleInputEvent(e: KeyboardEvent){
+    // handleInputEvent(e: KeyboardEvent){
+    //     this.inputKey = e.code;
+    //     console.log(this.inputKey);
+    // }
+    _onKeyDown(e: KeyboardEvent){
         this.inputKey = e.code;
-        console.log(this.inputKey);
     }
-    handleMouseDown(e: MouseEvent, canvas: HTMLCanvasElement) {
+    _onKeyUp(e: KeyboardEvent){
+        this.inputKey = "";
+    }
+    _onMouseDown(e: MouseEvent, canvas: HTMLCanvasElement) {
         var rect = canvas.getBoundingClientRect();
         var mouseX = e.clientX - rect.left;
         var mouseY = e.clientY - rect.top;    
         this.mouseEvent = [mouseX, mouseY];
-        // this.mouseEvent.clientX = 3;
         console.log(this.mouseEvent);
+    }
+    _onMouseUp(event: MouseEvent) {
+        this.mouseEvent = null;
     }
     Collision(obj1 : GameObject, obj2 : GameObject){
         if(obj1.x+ obj1.width>=obj2.x && obj1.x <= obj2.x + obj2.width){

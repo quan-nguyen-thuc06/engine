@@ -6,6 +6,7 @@ import {ButtonObject } from '../Engine/ButtonObject/ButtonObject';
 import { ImageObject } from '../Engine/ImageObject/ImageObject';
 import {Score} from "./Score";
 import { Ground } from './Ground';
+
 var point = new Audio("../audio/point.mp3");
 var die = new Audio("../audio/die.mp3");
 var hit = new Audio("../audio/hit.mp3");
@@ -50,17 +51,16 @@ export class PlayScene extends Scene {
         this.deadBird = false;
         this.score = new Score();
         this.ground = new Ground(2);
-        this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial");
+        this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial", "white");
         var bird = new Bird(100,30,50,50,
             imgBird,0,0.5,0.1
             );
         this.bird = bird;
         var bg = new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background");
-        // var ground = new ImageObject(0,670,700,150,"../Images/base.png",0,"ground");
         this.pipes = []
         this.addChild([bg],[bird],[this.textScore]);
         for(var i=0;i<numPipe;i++){
-            var x = i*distance + pipeWidth + 250;
+            var x = i*distance + pipeWidth + 400;
             var y = Math.floor(Math.random() *-200);
             var pipe = new PairOfPipe(x,y,"../Images/pipe-green.png",2);
             this.pipes.push(pipe);
@@ -75,7 +75,7 @@ export class PlayScene extends Scene {
             this.adt += deltaTime
             var ground = this.imageObjects.filter((imb)=>{
                 return imb.name === "ground";
-                })[0];
+                });
             var pipes = this.imageObjects.filter((imb)=>{
                 return imb.name === "pipe";
                 });
@@ -106,25 +106,23 @@ export class PlayScene extends Scene {
                                 break;
                             }
                         }
-                        // if(!Collision(ground, this.sprites[i])&&!this.checkPipe){ 
-                            this.pipes.map((pipe) => {
-                                pipe.update();
-                            });
+                        this.pipes.map((pipe) => {
+                            pipe.update();
+                        });
+                        this.sprites[i].update(time,deltaTime);
+                        if(this.inputKey==="Space") {
+                            this.bird.fly();
+                            // this.inputKey = "";
+                        }
+                        else if(this.checkPipe&&(!this.Collision(ground[0], this.sprites[i])&&!this.Collision(ground[1], this.sprites[i])))
                             this.sprites[i].update(time,deltaTime);
-                            if(this.inputKey==="Space") {
-                                this.bird.fly();
-                                this.inputKey = "";
-                            }
-                        // }
-                        else if(this.checkPipe&&!this.Collision(ground, this.sprites[i]))
-                            this.sprites[i].update(time,deltaTime);
-                        if(this.Collision(ground, this.sprites[i])||this.checkPipe){
+                        if(this.Collision(ground[0], this.sprites[i])||this.Collision(ground[1], this.sprites[i])||this.checkPipe){
                             if(this.score.getCurrentScore()> this.score.getHighScore())
                                 this.score.setHighScore(this.score.getCurrentScore());
                             console.log("Score: " + this.score.getCurrentScore() + "High Score: " + this.score.getHighScore());
                             var imgGameOver = new ImageObject(60,300,500,130,"../Images/gameover.png",0,"gameOver");
-                            var Score = new TextObject(110,470,"showScore","Score: "+ this.score.getCurrentScore(), "30px Arial");
-                            var highScore = new TextObject(330,470,"highScore","High Score: "+ this.score.getHighScore(), "30px Arial");
+                            var Score = new TextObject(110,470,"showScore","Score: "+ this.score.getCurrentScore(), "30px Arial","white");
+                            var highScore = new TextObject(330,470,"highScore","High Score: "+ this.score.getHighScore(), "30px Arial","white");
                             this.addChild([imgGameOver,this.buttonReplay],[],[Score,highScore]);
                             this.deadBird = true;
                             audioPlayer.pause();
@@ -143,8 +141,8 @@ export class PlayScene extends Scene {
                     if(pipe.Pipes[0].x<-100){
                         var frontIndex = index -1;
                         if(frontIndex<0) frontIndex = this.pipes.length-1;
-                        for(var i = 0; i <3;i++){
-                            pipe.Pipes[i].x = this.pipes[frontIndex].Pipes[0].x + distance;
+                        for(var i = 0; i <pipe.Pipes.length;i++){
+                            pipe.Pipes[i].x = this.pipes[frontIndex].Pipes[i].x + distance;
                         }
                     }
                 })
@@ -158,7 +156,6 @@ export class PlayScene extends Scene {
                 this.imageObjects.pop();
                 this.textObjects.pop();
                 this.textObjects.pop();
-                this.mouseEvent = null;
                 this.resetScene();
             }
         }
@@ -167,32 +164,31 @@ export class PlayScene extends Scene {
     resetScene(){
         audioPlayer.play();
         audioPlayer.loop =true;
-        super.resetScene();
-        this.fps = fps;
-        this.rate = 1.0/fps*1000;
-        this.adt = 0.0;
+        // super.resetScene();
         this.checkPipe = false;
         this.addScore = null;
         this.score.setCurrentScore(0);
-        this.ground = new Ground(2);
-        this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial");
-        var bird = new Bird(100,30,50,50,
-            imgBird,0,0.5,0.1
-            );
-        this.bird = bird;
-        var bg = new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background");
-        // var ground = new ImageObject(0,670,700,150,"../Images/base.png",0,"ground");
-        this.pipes = []
-        this.addChild([bg],[bird],[this.textScore]);
+        this.bird.reset();
+        this.ground.reset();
+        this.deadBird = false;
+        // this.ground = new Ground(2);
+        // this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial","white");
+        // var bird = new Bird(100,30,50,50,
+        //     imgBird,0,0.5,0.1
+        //     );
+        // this.bird = bird;
+        // var bg = new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background",);
+        // this.pipes = []
+        // this.addChild([bg],[bird],[this.textScore]);
         for(var i=0;i<numPipe;i++){
-            var x = i*distance + pipeWidth + 250;
-            var y = Math.floor(Math.random() *-100);
-            var pipe = new PairOfPipe(x,y,"../Images/pipe-green.png",2);
-            this.pipes.push(pipe);
-            this.addChild([pipe.Pipes[0],pipe.Pipes[1],pipe.Pipes[2]],[],[]);
+            // var x = i*distance + pipeWidth + 400;
+            // var y = Math.floor(Math.random() *-200);
+            // var pipe = new PairOfPipe(x,y,"../Images/pipe-green.png",2);
+            // this.pipes.push(pipe);
+            // this.addChild([pipe.Pipes[0],pipe.Pipes[1],pipe.Pipes[2]],[],[]);
+            this.pipes[i].reset();
         }
-        // this.addChild([ground],[],[]);
-        this.addChild([this.ground.images[0],this.ground.images[1]],[],[]);
+        // this.addChild([this.ground.images[0],this.ground.images[1]],[],[]);
         console.log("rendering");
     }
 }

@@ -1,5 +1,6 @@
 import { SceneManager } from "../Scene/SceneManager";
 import { Renderer } from "../Renderer/Renderer";
+
 export class Game{
     sceneManager: SceneManager;
     lastTime: number | null;
@@ -9,10 +10,13 @@ export class Game{
     }
     
     start(render: Renderer){
-        document.addEventListener('keyup',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene].handleInputEvent(e));
-        document.addEventListener('click',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene].handleMouseDown(e,render.canvas));
+        document.addEventListener('keydown',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene]._onKeyDown(e));
+        document.addEventListener('keyup',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene]._onKeyUp(e));
+        document.addEventListener('mousedown',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene]._onMouseDown(e,render.canvas));
+        document.addEventListener('mouseup',(e)=>this.sceneManager.scenes[this.sceneManager.currentScene]._onMouseUp(e));
         requestAnimationFrame(()=>this.loop(render));
     }
+    
     loop(render: Renderer){
         var indexScene = this.sceneManager.currentScene;
         const time = window.performance.now();

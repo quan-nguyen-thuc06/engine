@@ -1,6 +1,7 @@
 import {Scene} from '../Engine/Scene/Scene';
 import { ImageObject } from '../Engine/ImageObject/ImageObject';
 import { ButtonObject } from '../Engine/ButtonObject/ButtonObject';
+
 export class StartScreen extends Scene {
     background: ImageObject;
     ground: ImageObject;
@@ -15,7 +16,7 @@ export class StartScreen extends Scene {
         this.addChild([this.background,this.ground,this.imgStart],[],[]);
     }
     update(time: number, delta: number){
-        if(this.inputKey==="Enter"||(this.mouseEvent!=null && this.buttonStart.isInside(this.mouseEvent))) {
+        if(this.inputKey === "Enter"||(this.mouseEvent!=null && this.buttonStart.isInside(this.mouseEvent))) {
             this.inputKey = "";
             return 1;
         }
