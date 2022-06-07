@@ -1,35 +1,28 @@
 import {Scene} from '../Engine/Scene/Scene';
 import { ImageObject } from '../Engine/ImageObject/ImageObject';
 import { ButtonObject } from '../Engine/ButtonObject/ButtonObject';
-import {ground} from "./Ground"
+import {Ground} from "./Ground"
+import { Game } from '../Engine/Core/Game';
 const fps = 60;
-class StartScene extends Scene {
-    rate: number;
-    adt: number;    //accumulated delta time
+export class StartScene extends Scene {
     background: ImageObject;
-    ground = ground;
+    ground: Ground;
     imgStart: ImageObject;
     buttonStart: ButtonObject
-    constructor(){
-        super();
-        this.rate = 1.0/fps*1000;
-        this.adt = 0.0;
-        this.background =new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background");
-        this.imgStart = new ImageObject(50,20,500,700,"../Images/message.png",0,"");
-        this.buttonStart = new ButtonObject(0,0,700,800,"",0,"buttonStart");
-
+    constructor(game: Game){
+        super(game);
+        this.background =new ImageObject(0,0,700,800,game.loader.getImage("background") as HTMLImageElement,0,"background");
+        this.imgStart = new ImageObject(50,20,500,700,game.loader.getImage("message") as HTMLImageElement,0,"");
+        this.buttonStart = new ButtonObject(0,0,700,800,null,0,"buttonStart");
+        this.ground = new Ground(2,game)
         var imageObjects = [this.background].concat(this.ground.getComponent()["imageObjects"]);
         imageObjects.push(this.imgStart);
         this.addChild(imageObjects,[],[]);
     }
     update(time: number, deltaTime: number){
-        this.adt += deltaTime;
-        if(this.adt>=this.rate){
-            this.adt -= this.rate;
-            this.ground.update();
-        }
-        if(this.inputKey === "Enter"||(this.mouseEvent!=null && this.buttonStart.isInside(this.mouseEvent))) {
-            this.inputKey = "";
+        this.ground.update(time, deltaTime);
+        if(this.inputKey === "Enter"||this.inputKey === "Space" ||(this.mouseEvent!=null && this.buttonStart.isInside(this.mouseEvent))) {
+            this.game.sceneManager.switchScene(1)
             return 1;
         }
 
@@ -37,5 +30,5 @@ class StartScene extends Scene {
     }
 }
 
-var startScene = new StartScene();
-export {startScene};
+// var startScene = new StartScene();
+// export {startScene};

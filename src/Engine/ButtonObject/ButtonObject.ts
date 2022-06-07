@@ -1,6 +1,6 @@
 import { ImageObject} from "../ImageObject/ImageObject";
 export class ButtonObject extends ImageObject{
-    constructor(x: number, y: number, width: number, height: number,image: string, degrees: number, name: string){
+    constructor(x: number, y: number, width: number, height: number,image: HTMLImageElement | null, degrees: number, name: string){
         super(x, y, width, height,image, degrees, name);
     }
     isInside(pos: Array<number>){

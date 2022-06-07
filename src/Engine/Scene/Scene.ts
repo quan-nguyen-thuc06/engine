@@ -3,18 +3,23 @@ import { Sprite } from "../Sprite/Sprite";
 import { TextObject } from "../TextObject/TextObject";
 import {Renderer} from "../Renderer/Renderer";
 import {GameObject} from "../GameObject/GameObject";
+import { SceneManager } from "./SceneManager";
+import { Game } from "../Core/Game";
+
 export class Scene{
     imageObjects: ImageObject[];
     sprites: Sprite[];
     textObjects: TextObject[]; 
     inputKey : String;
     mouseEvent : Array<number> | null;
-    constructor(){
+    game: Game;
+    constructor(game: Game){
         this.imageObjects = [];
         this.sprites = [];
         this.textObjects = [];
         this.inputKey = "";
         this.mouseEvent = null;
+        this.game = game;
     }
     resetScene(){
         for(var i = 0; i < this.imageObjects.length;i++){
@@ -65,7 +70,6 @@ export class Scene{
         for (var i = 0; i <this.sprites.length; i++) {
             this.sprites[i].update(time, delta);
         }
-        return 1;
     }
     onKeyDown(e: KeyboardEvent){
         this.inputKey = e.code;

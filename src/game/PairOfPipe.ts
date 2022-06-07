@@ -1,5 +1,5 @@
 import { ImageObject } from "../Engine/ImageObject/ImageObject";
-
+import {Game} from "../Engine/Core/Game"
 const blanks = 200;
 const pipeHeight = 350;
 const numPipe = 4;
@@ -9,16 +9,16 @@ class PairOfPipe{
     Pipes: Array<ImageObject>;
     private speed: number;
 
-    constructor(x:number, y:number, image: string,speed: number){
-        var PipeUp = new ImageObject(x,y,pipeWidth,pipeHeight,image,180,"pipe");
-        var PipeDown = new ImageObject(x,y+pipeHeight+blanks,pipeWidth,pipeHeight,image,0,"pipe");
-        var checkScore = new ImageObject(x+pipeWidth,y+pipeHeight,10,blanks,"",0,"checkScore");
+    constructor(x:number, y:number, game: Game,speed: number){
+        var PipeUp = new ImageObject(x,y,pipeWidth,pipeHeight,game.loader.getImage("pipe") as HTMLImageElement,180,"pipe");
+        var PipeDown = new ImageObject(x,y+pipeHeight+blanks,pipeWidth,pipeHeight,game.loader.getImage("pipe") as HTMLImageElement,0,"pipe");
+        var checkScore = new ImageObject(x+pipeWidth,y+pipeHeight,10,blanks,null,0,"checkScore");
         this.Pipes= [PipeUp,PipeDown,checkScore];
         this.speed = speed;
     }
-    update(){
+    update(time:number, deltaTime:number){
         for(var i = 0; i <3;i++){
-            this.Pipes[i].x -= this.speed;
+            this.Pipes[i].x -= this.speed*(deltaTime/16.67);
         }
     }
     reset(){
@@ -37,12 +37,12 @@ class PairOfPipe{
 
 class ListPairOfPipes{
     listPipe: PairOfPipe[];
-    constructor(){
+    constructor(game: Game){
         this.listPipe = [];
         for(var i=0;i<numPipe;i++){
             var x = i*distance + pipeWidth + 400;
             var y = Math.floor(Math.random() *-200);
-            var pipe = new PairOfPipe(x,y,"../Images/pipe-green.png",2);
+            var pipe = new PairOfPipe(x,y,game,3);
             this.listPipe.push(pipe);
         }
     }
@@ -58,5 +58,5 @@ class ListPairOfPipes{
         })
     }
 }
-var listPairOfPipes = new ListPairOfPipes();
-export {PairOfPipe, listPairOfPipes};
+
+export {PairOfPipe, ListPairOfPipes};

@@ -2,7 +2,7 @@ import { TextObject } from '../Engine/TextObject/TextObject';
 import {ButtonObject } from '../Engine/ButtonObject/ButtonObject';
 import { ImageObject } from '../Engine/ImageObject/ImageObject';
 
-class PanelGameOver {
+export class PanelGameOver {
     imgGameOver: ImageObject;
     currentScore: TextObject;
     highScore: TextObject;
@@ -31,10 +31,10 @@ class PanelGameOver {
         this.highScore.setContent("High Score: " + highScore)
     }
 }
-var replayButton = new ButtonObject(225,500,160,80,"../Images/replay-button.png",0,"replayButton");
-var imgGameOver = new ImageObject(60,300,500,130,"../Images/gameover.png",0,"gameOver");
-var currentScore = new TextObject(110,470,"showScore","Score: 0", "30px Arial","white");
-var highScore = new TextObject(330,470,"highScore","High Score: 0", "30px Arial","white");
+// var replayButton = new ButtonObject(225,500,160,80,"../Images/replay-button.png",0,"replayButton");
+// var imgGameOver = new ImageObject(60,300,500,130,"../Images/gameover.png",0,"gameOver");
+// var currentScore = new TextObject(110,470,"showScore","Score: 0", "30px Arial","white");
+// var highScore = new TextObject(330,470,"highScore","High Score: 0", "30px Arial","white");
 
-var panelGameOver = new PanelGameOver(imgGameOver,currentScore,highScore,replayButton);
-export {panelGameOver}
+// var panelGameOver = new PanelGameOver(imgGameOver,currentScore,highScore,replayButton);
+// export {panelGameOver}
