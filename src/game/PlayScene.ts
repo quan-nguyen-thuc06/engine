@@ -1,10 +1,10 @@
 import {Scene} from '../Engine/Scene/Scene';
 import bird from './Bird';
-import {PairOfPipe, listPairOfPipes} from './PairOfPipe';
+import {listPairOfPipes} from './PairOfPipe';
 import { TextObject } from '../Engine/TextObject/TextObject';
 import { ImageObject } from '../Engine/ImageObject/ImageObject';
 import {score} from "./Score";
-import { Ground } from './Ground';
+import { ground } from './Ground';
 import {panelGameOver} from './PanelGameOver'
 
 const point = new Audio("../audio/point.mp3");
@@ -14,12 +14,11 @@ const audioPlayer = new Audio("../audio/orchestrawav-26158.mp3");
 
 const fps = 60;
 export class PlayScene extends Scene {
-    fps: number;
     rate: number;
     adt: number;    //accumulated delta time
     bird = bird;
     pipes = listPairOfPipes;
-    ground: Ground;
+    ground = ground;
     checkPipe: boolean;
     textScore: TextObject;
     addScore: number | null;
@@ -31,14 +30,12 @@ export class PlayScene extends Scene {
         // play audio
         audioPlayer.play();
         audioPlayer.loop =true;
-
-        this.fps = fps;
         this.rate = 1.0/fps*1000;
         this.adt = 0.0;
         this.checkPipe = false;
         this.addScore = null;
         this.deadBird = false;
-        this.ground = new Ground(2);
+        // this.ground = new Ground(2);
 
         this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial", "white");
         var bg = new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background");
@@ -165,3 +162,6 @@ export class PlayScene extends Scene {
         console.log("rendering");
     }
 }
+
+var playScene = new PlayScene();
+export {playScene};

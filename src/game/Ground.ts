@@ -1,6 +1,6 @@
 import { ImageObject } from "../Engine/ImageObject/ImageObject";
 
-export class Ground{
+class Ground{
     images: Array<ImageObject>;
     speed: number;
     constructor(speed: number){
@@ -30,3 +30,6 @@ export class Ground{
         } 
     }
 }
+
+var ground = new Ground(2);
+export {Ground,ground};
