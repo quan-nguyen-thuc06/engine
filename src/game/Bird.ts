@@ -39,6 +39,7 @@ class Bird extends Sprite {
             }
         }
     }
+
     fly(){
         audio.play(); 
         audio.playbackRate = 2;
@@ -59,5 +60,5 @@ const imgBird = [
     "../Images/bird/frame-7.png",
     "../Images/bird/frame-8.png",
 ];
-var bird = new Bird(100,30,50,50,imgBird,0,0.5,0.1);
+var bird = new Bird(100,280,50,50,imgBird,0,0.5,0.1);
 export default bird;

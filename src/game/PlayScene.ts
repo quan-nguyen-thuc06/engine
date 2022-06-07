@@ -25,6 +25,7 @@ export class PlayScene extends Scene {
     score = score;
     deadBird: boolean;
     panelGameOver = panelGameOver;
+    start: boolean;
     constructor(){
         super();
         // play audio
@@ -35,7 +36,7 @@ export class PlayScene extends Scene {
         this.checkPipe = false;
         this.addScore = null;
         this.deadBird = false;
-        // this.ground = new Ground(2);
+        this.start = false; 
 
         this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial", "white");
         var bg = new ImageObject(0,0,700,800,"../Images/background-night.png",0,"background");
@@ -66,7 +67,7 @@ export class PlayScene extends Scene {
     }
     
     update(time: number, deltaTime: number) {
-        if( !this.deadBird){
+        if( !this.deadBird && this.start){
             this.adt += deltaTime
             var ground = this.imageObjects.filter((imb)=>{
                 return imb.name === "ground";
@@ -144,6 +145,10 @@ export class PlayScene extends Scene {
                 this.resetScene();
             }
         }
+        else if(!this.start){
+            if(this.inputKey === "Space")
+                this.start = true;
+        }
         return 1;
     }
     resetScene(){
@@ -151,6 +156,7 @@ export class PlayScene extends Scene {
         audioPlayer.loop =true;
         this.checkPipe = false;
         this.addScore = null;
+        this.start = false;
         super.resetScene();
         this.score.setCurrentScore(0);
         this.bird.reset();
