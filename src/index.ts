@@ -12,59 +12,59 @@ var myGame = new Game(gameScene);
 const imagesLoad = [
     {
         "key": "bird0",
-        "path": "/Images/bird/frame-1.png",
+        "path": "Images/bird/frame-1.png",
     },
     {
         "key": "bird1",
-        "path": "/Images/bird/frame-2.png",
+        "path": "Images/bird/frame-2.png",
     },
     {
         "key": "bird2",
-        "path": "/Images/bird/frame-3.png",
+        "path": "Images/bird/frame-3.png",
     },
     {
         "key": "bird3",
-        "path": "/Images/bird/frame-4.png",
+        "path": "Images/bird/frame-4.png",
     },
     {
         "key": "bird4",
-        "path": "/Images/bird/frame-5.png",
+        "path": "Images/bird/frame-5.png",
     },
     {
         "key": "bird5",
-        "path": "/Images/bird/frame-6.png",
+        "path": "Images/bird/frame-6.png",
     },
     {
         "key": "bird6",
-        "path": "/Images/bird/frame-7.png",
+        "path": "Images/bird/frame-7.png",
     },
     {
         "key": "bird7",
-        "path": "/Images/bird/frame-8.png",
+        "path": "Images/bird/frame-8.png",
     },
     {
         "key": "pipe",
-        "path": "/Images/pipe/pipe-green.png",
+        "path": "Images/pipe/pipe-green.png",
     },
     {
         "key": "message",
-        "path": "/Images/gameStart/message.png",
+        "path": "Images/gameStart/message.png",
     },
     {
         "key": "ground",
-        "path": "/Images/ground/base.png",
+        "path": "Images/ground/base.png",
     },
     {
         "key": "gameover",
-        "path": "/Images/panelGameOver/gameover.png",
+        "path": "Images/panelGameOver/gameover.png",
     },
     {
         "key": "replayButton",
-        "path": "/Images/panelGameOver/replay-button.png",
+        "path": "Images/panelGameOver/replay-button.png",
     },
     {
         "key": "background",
-        "path": "/Images/background/background-night.png"
+        "path": "Images/background/background-night.png"
     }
 ]
 
