@@ -5,8 +5,23 @@ class Ground{
     speed: number;
     constructor(speed: number, game: Game){
         var image = game.loader.getImage("ground");
-        var imageObject1 = new ImageObject(0,670,650,150,image as HTMLImageElement,0,"ground",2);
-        var imageObject2 = new ImageObject(649,670,650,150,image as HTMLImageElement,0,"ground",2);
+        var imageObject1 = new ImageObject(image as HTMLImageElement);
+        imageObject1.name = "ground";
+        imageObject1.z_index =2;
+        imageObject1.y = 670;
+        imageObject1.width = 650;
+        imageObject1.height = 150;
+        imageObject1.defaultPosition= [0,670];
+
+        var imageObject2 = new ImageObject(image as HTMLImageElement);
+        imageObject2.name = "ground";
+        imageObject2.z_index =2;
+        imageObject2.x = 649;
+        imageObject2.y = 670;
+        imageObject2.width = 650;
+        imageObject2.height = 150;
+        imageObject2.defaultPosition= [649,670];
+
         this.images = [imageObject1,imageObject2];
         this.speed = speed;
     }

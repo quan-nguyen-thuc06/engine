@@ -11,9 +11,26 @@ export class StartScene extends Scene {
     buttonStart: ButtonObject
     constructor(game: Game){
         super(game);
-        this.background =new ImageObject(0,0,700,800,game.loader.getImage("background") as HTMLImageElement,0,"background");
-        this.imgStart = new ImageObject(50,20,500,700,game.loader.getImage("message") as HTMLImageElement,0,"",2);
-        this.buttonStart = new ButtonObject(0,0,700,800,null,0,"buttonStart");
+        this.background =new ImageObject(game.loader.getImage("background") as HTMLImageElement);
+        // set attributes
+        this.background.width = 700;
+        this.background.height = 800;
+        this.background.name = "background"
+
+        this.imgStart = new ImageObject(game.loader.getImage("message") as HTMLImageElement);
+        // set attributes
+        this.imgStart.width =500,
+        this.imgStart.height = 700;
+        this.imgStart.x = 50;
+        this.imgStart.y = 20;
+        this.imgStart.z_index = 2;
+
+        this.buttonStart = new ButtonObject(null);
+        // set attributes
+        this.buttonStart.width = 700;
+        this.buttonStart.height = 800;
+        this.buttonStart.name = "buttonStart";
+
         this.ground = new Ground(2,game)
         var imageObjects = [this.background].concat(this.ground.getComponent());
         imageObjects.push(this.imgStart);

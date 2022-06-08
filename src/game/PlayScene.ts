@@ -15,6 +15,10 @@ const die = new Audio("audio/die.mp3");
 const hit = new Audio("audio/hit.mp3");
 const audioPlayer = new Audio("audio/orchestrawav-26158.mp3");
 const audio = new Audio("audio/swoosh.mp3");
+const Bird_Width = 50;
+const Bird_Height = 50;
+const Bird_X = 100;
+const Bird_Y = 280;
 
 export class PlayScene extends Scene {
     bird: Bird;
@@ -40,18 +44,84 @@ export class PlayScene extends Scene {
         this.start = false;
         this.pause = false; 
         this.score = new Score();
-        this.bird =  new Bird(100,280,50,50,0,0.5,20,this,2)
-        this.textDescription = new TextObject(140,450,"Description","Press Enter to continue","30px Arial", "white",2);
+
+        this.bird =  new Bird(this)
+        // set attributes
+        this.bird.x = Bird_X;
+        this.bird.y = Bird_Y;
+        this.bird.width = Bird_Width;
+        this.bird.height = Bird_Height;
+        this.bird.gravity = 0.5;
+        this.bird.speed = 20;
+        this.bird.z_index = 2;
+        this.bird.defaultPosition = [this.bird.x, this.bird.y];
+        
+        this.textDescription = new TextObject();
+        // set attributes
+        this.textDescription.x = 140;
+        this.textDescription.y = 450;
+        this.textDescription.content = "Press Enter to continue";
+        this.textDescription.font = "30px Arial";
+        this.textDescription.color = "white";
+        this.textDescription.z_index = 2;
         this.textDescription.setActive(false);
-        this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial", "white",2);
-        var bg = new ImageObject(0,0,700,800,game.loader.getImage("background") as HTMLImageElement,0,"background");
+        this.textDescription.defaultPosition = [140,450];
+
+        this.textScore = new TextObject();
+        this.textScore.x = 10;
+        this.textScore.y = 30;
+        this.textScore.content = "Score: "+ this.score.getCurrentScore();
+        this.textScore.font = "18px Arial";
+        this.textScore.color = "white";
+        this.textScore.z_index = 2;
+        this.textScore.defaultPosition = [10,30];
+
+        var bg = new ImageObject(game.loader.getImage("background") as HTMLImageElement);
+        // set attributes
+        bg.width = 700;
+        bg.height = 800;
+        bg.name = "background";
+
         this.ground = new Ground(4,game);
         this.pipes = new ListPairOfPipes(game);
+
+        // init panelGameOver
+        var imgGameOver = new ImageObject(game.loader.getImage("gameover") as HTMLImageElement);
+        imgGameOver.x = 60;
+        imgGameOver.y = 300;
+        imgGameOver.width = 500;
+        imgGameOver.height = 130;
+        imgGameOver.z_index = 3;
+        imgGameOver.defaultPosition = [60,300];
+
+        var textCurrentScore = new TextObject();
+        textCurrentScore.x = 110;
+        textCurrentScore.y = 470;
+        textCurrentScore.content = "Score: 0";
+        textCurrentScore.font = "30px Arial";
+        textCurrentScore.color = "white";
+        textCurrentScore.z_index = 3;
+        textCurrentScore.defaultPosition = [110,470];
+
+        var textHighScore = new TextObject();
+        textHighScore.x = 330;
+        textHighScore.y = 470;
+        textHighScore.content = "High Score: 0";
+        textHighScore.font = "30px Arial";
+        textHighScore.color = "white";
+        textHighScore.z_index = 3;
+        textHighScore.defaultPosition = [330,470]
+
+        var buttonReplay = new ButtonObject(game.loader.getImage("replayButton") as HTMLImageElement);
+        buttonReplay.x = 225;
+        buttonReplay.y = 500;
+        buttonReplay.width = 160;
+        buttonReplay.height = 80;
+        buttonReplay.z_index = 3;
+        buttonReplay.defaultPosition = [225,500];
+
         this.panelGameOver = new PanelGameOver(
-            new ImageObject(60,300,500,130,game.loader.getImage("gameover") as HTMLImageElement,0,"gameOver",3),
-            new TextObject(110,470,"showScore","Score: 0", "30px Arial","white",3),
-            new TextObject(330,470,"highScore","High Score: 0", "30px Arial","white",3),
-            new ButtonObject(225,500,160,80,game.loader.getImage("replayButton") as HTMLImageElement,0,"replayButton",3), 
+            imgGameOver,textCurrentScore,textHighScore,buttonReplay
         );
         
         // List of GameObject

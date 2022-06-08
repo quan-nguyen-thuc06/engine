@@ -3,11 +3,11 @@ export class TextObject extends GameObject{
     content: string;
     font: string;
     color: string;
-    constructor(x: number, y: number, name: string , content: string, font: string, color = "black", z_index: number =0) {
-        super(x, y, 0, 0, name,true, z_index);
-        this.content = content;
-        this.font = font;
-        this.color = color;
+    constructor() {
+        super();
+        this.content = "";
+        this.font = "";
+        this.color = "";
     }
     setContent(content: string){
         this.content = content;

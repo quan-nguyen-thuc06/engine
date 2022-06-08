@@ -4,16 +4,18 @@ import {Scene} from "../Engine/Scene/Scene"
 export class Bird extends Sprite {
     gravity : number;
     speed : number; 
-    constructor(x: number, y: number, width: number, height: number,degrees: number,gravity: number,rate: number, scene: Scene, z_index: number =0) {
+    constructor(scene: Scene) {
         var images:Array<HTMLImageElement> = [];
         // console.log("loader", scene.game.loader);
         for (var i = 0; i <8;i++){
             let name =  "bird" + i;
             images.push(scene.game.loader.getImage(name) as HTMLImageElement);
         } 
-        super(x, y, width, height,images,degrees,"bird",rate, z_index);
-        this.gravity = gravity;
+        super(images);
+        this.name = "bird";
+        this.gravity = 0;
         this.speed = 0;
+        this.rate = 1.0/30*1000;
     }
     update(time: number, deltaTime:number){
         this.y += (this.speed + 0.5*this.gravity)*(deltaTime/16.67);
@@ -32,7 +34,7 @@ export class Bird extends Sprite {
     }
 
     fly(){
-        this.speed = -8;
+        this.speed = -7;
     }
     reset(){
         super.reset();

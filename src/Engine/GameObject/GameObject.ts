@@ -7,15 +7,15 @@ export class GameObject{
     active: boolean;
     defaultPosition: Array<number>;
     z_index: number;
-    constructor(x: number, y: number, width: number, height: number, name: string, active = true, z_index: number = 0) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.name = name;
-        this.active = active;
-        this.z_index = z_index;
-        this.defaultPosition = [x,y];
+    constructor() {
+        this.x = 0;
+        this.y = 0;
+        this.width = 0;
+        this.height = 0;
+        this.name = "";
+        this.active = true;
+        this.z_index = 0;
+        this.defaultPosition = [0,0];
     }
     reset(){
         this.x = this.defaultPosition[0];
