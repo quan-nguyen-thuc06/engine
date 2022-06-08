@@ -40,7 +40,7 @@ export class PlayScene extends Scene {
         this.start = false;
         this.pause = false; 
         this.score = new Score();
-        this.bird =  new Bird(100,280,50,50,0,0.5,20,this,1)
+        this.bird =  new Bird(100,280,50,50,0,0.5,20,this,2)
         this.textDescription = new TextObject(140,450,"Description","Press Enter to continue","30px Arial", "white",2);
         this.textDescription.setActive(false);
         this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial", "white",2);
@@ -102,9 +102,9 @@ export class PlayScene extends Scene {
                 pipe.update(time, deltaTime);
             });
             this.pipes.update();
-            
+
             if(this.processInput.inputKey==="Space") {
-                this.bird.fly(deltaTime);
+                this.bird.fly();
                 audio.play(); 
                 audio.playbackRate = 2;
             }
@@ -116,7 +116,6 @@ export class PlayScene extends Scene {
                 this.panelGameOver.update(this.score.getCurrentScore(), this.score.getHighScore());
                 // set state bird is die
                 this.deadBird = true;
-                
                 // play audio
                 audioPlayer.pause();
                 hit.play();
@@ -130,6 +129,10 @@ export class PlayScene extends Scene {
                     
         }
         else if(this.deadBird){
+            if(!this.collision.handleCollision(this.ground.getComponent()[0], this.bird)&&!this.collision.handleCollision(this.ground.getComponent()[1], this.bird)){
+                this.bird.speed = 100;
+                this.bird.update(time, deltaTime);
+            }
             if((this.processInput.inputKey === "Enter"||this.processInput.mouseEvent!=null&& this.panelGameOver.replayButton.isInside(this.processInput.mouseEvent))){
                 this.deadBird = false;
                 this.panelGameOver.setActive(false); 

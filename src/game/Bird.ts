@@ -22,7 +22,7 @@ export class Bird extends Sprite {
             this.y = 0;
         if(this.speed>0){
             this.degrees += 1;
-            if(this.degrees>20) this.degrees = 20;
+            if(this.degrees>40) this.degrees = 40;
         }
         else{
             this.degrees -= 1;
@@ -31,8 +31,7 @@ export class Bird extends Sprite {
         }
     }
 
-    fly(deltaTime: number){
-        
+    fly(){
         this.speed = -8;
     }
     reset(){
