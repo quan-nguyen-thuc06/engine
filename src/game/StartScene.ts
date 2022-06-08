@@ -29,6 +29,3 @@ export class StartScene extends Scene {
         return 0;
     }
 }
-
-// var startScene = new StartScene();
-// export {startScene};

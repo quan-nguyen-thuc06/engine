@@ -1,10 +1,10 @@
 import {Scene} from '../Engine/Scene/Scene';
 import {Bird} from './Bird';
 import {ListPairOfPipes} from './PairOfPipe';
-import { TextObject } from '../Engine/TextObject/TextObject';
-import { ImageObject } from '../Engine/ImageObject/ImageObject';
-import {score} from "./Score";
-import { Ground } from './Ground';
+import {TextObject } from '../Engine/TextObject/TextObject';
+import {ImageObject } from '../Engine/ImageObject/ImageObject';
+import {Score} from "./Score";
+import {Ground } from './Ground';
 import {PanelGameOver} from './PanelGameOver'
 import {Game} from '../Engine/Core/Game'
 import {ButtonObject} from '../Engine/ButtonObject/ButtonObject';
@@ -21,11 +21,13 @@ export class PlayScene extends Scene {
     ground: Ground;
     checkPipe: boolean;
     textScore: TextObject;
+    textDescription: TextObject;
     addScore: number | null;
-    score = score;
+    score: Score;
     deadBird: boolean;
     panelGameOver : PanelGameOver;
     start: boolean;
+    pause: boolean;
     constructor(game: Game){
         super(game);
         // play audio
@@ -34,11 +36,15 @@ export class PlayScene extends Scene {
         this.checkPipe = false;
         this.addScore = null;
         this.deadBird = false;
-        this.start = false; 
+        this.start = false;
+        this.pause = false; 
+        this.score = new Score();
         this.bird =  new Bird(100,280,50,50,0,0.5,20,this)
+        this.textDescription = new TextObject(140,450,"Description","Press Enter to continue","30px Arial", "white");
+        this.textDescription.setActive(false);
         this.textScore = new TextObject(10,30,"score","Score: "+ this.score.getCurrentScore(), "18px Arial", "white");
         var bg = new ImageObject(0,0,700,800,game.loader.getImage("background") as HTMLImageElement,0,"background");
-        this.ground = new Ground(2,game);
+        this.ground = new Ground(4,game);
         this.pipes = new ListPairOfPipes(game);
 
         this.panelGameOver = new PanelGameOver(
@@ -49,7 +55,7 @@ export class PlayScene extends Scene {
         );
         
         // addChild
-        this.addChild([bg],[this.bird],[this.textScore]);
+        this.addChild([bg],[this.bird],[this.textScore, this.textDescription]);
         for(var i=0;i<this.pipes.listPipe.length;i++){
             var pipe = this.pipes.listPipe[i];
             this.addChild(
@@ -74,7 +80,11 @@ export class PlayScene extends Scene {
     }
     
     update(time: number, deltaTime: number) {
-        if( !this.deadBird && this.start){
+        if( !this.deadBird && this.start && !this.pause){
+            if(this.processInput.inputKey === "KeyA"){
+                this.pause = true;
+                this.textDescription.setActive(true);
+            }
             var ground = this.imageObjects.filter((imb)=>{
                 return imb.name === "ground";
                 });
@@ -132,7 +142,7 @@ export class PlayScene extends Scene {
                         // hiden bird
                         setTimeout(()=> {
                             this.bird.setActive(false);
-                        }, 100);
+                        }, 200);
                         setTimeout(() =>{
                             // show panelGameOver
                             this.panelGameOver.setActive(true);
@@ -146,7 +156,7 @@ export class PlayScene extends Scene {
             this.pipes.update();
         }
         else if(this.deadBird){
-            if((this.processInput.mouseEvent!=null&& this.panelGameOver.replayButton.isInside(this.processInput.mouseEvent))){
+            if((this.processInput.inputKey === "Enter"||this.processInput.mouseEvent!=null&& this.panelGameOver.replayButton.isInside(this.processInput.mouseEvent))){
                 this.deadBird = false;
                 this.panelGameOver.setActive(false); 
                 this.bird.setActive(true);  
@@ -154,8 +164,15 @@ export class PlayScene extends Scene {
             }
         }
         else if(!this.start){
-            if(this.processInput.inputKey === "Space")
+            if(this.processInput.inputKey === "Space"){
                 this.start = true;
+            }
+        }
+        else if (this.pause){
+            if(this.processInput.inputKey === "Enter"){
+                this.pause = false;
+                this.textDescription.setActive(false);
+            }
         }
     }
     resetScene(){
@@ -166,6 +183,7 @@ export class PlayScene extends Scene {
         this.start = false;
         super.resetScene();
         this.score.setCurrentScore(0);
+        this.textScore.setContent("Score: 0");
         this.bird.reset();
         this.ground.reset();
         for(var i=0;i<this.pipes.listPipe.length;i++){

@@ -18,6 +18,4 @@ class Score{
         this.highScore = highScore;
     }
 }
-
-var score = new Score();
-export {score,Score};
+export {Score};

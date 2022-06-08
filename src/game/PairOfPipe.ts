@@ -42,7 +42,7 @@ class ListPairOfPipes{
         for(var i=0;i<numPipe;i++){
             var x = i*distance + pipeWidth + 400;
             var y = Math.floor(Math.random() *-200);
-            var pipe = new PairOfPipe(x,y,game,3);
+            var pipe = new PairOfPipe(x,y,game,4);
             this.listPipe.push(pipe);
         }
     }

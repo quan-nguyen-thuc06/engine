@@ -7,6 +7,7 @@ export class ProcessInput{
     }
     onKeyDown(e: KeyboardEvent){
         this.inputKey = e.code;
+        console.log(this.inputKey);
     }
     onKeyUp(){
         this.inputKey = "";
