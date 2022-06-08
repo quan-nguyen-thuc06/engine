@@ -1,5 +1,5 @@
 import { Sprite } from "../Engine/Sprite/Sprite";
-var audio = new Audio("../audio/swoosh.mp3");
+
 import {Scene} from "../Engine/Scene/Scene"
 export class Bird extends Sprite {
     gravity : number;
@@ -32,8 +32,7 @@ export class Bird extends Sprite {
     }
 
     fly(deltaTime: number){
-        // audio.play(); 
-        // audio.playbackRate = 2;
+        
         this.speed = -8;
     }
     reset(){

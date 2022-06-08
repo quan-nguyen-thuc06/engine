@@ -21,7 +21,7 @@ export class StartScene extends Scene {
     }
     update(time: number, deltaTime: number){
         this.ground.update(time, deltaTime);
-        if(this.inputKey === "Enter"||this.inputKey === "Space" ||(this.mouseEvent!=null && this.buttonStart.isInside(this.mouseEvent))) {
+        if(this.processInput.inputKey === "Enter"||this.processInput.inputKey === "Space" ||(this.processInput.mouseEvent!=null && this.buttonStart.isInside(this.processInput.mouseEvent))) {
             this.game.sceneManager.switchScene(1)
             return 1;
         }

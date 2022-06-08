@@ -1,10 +1,24 @@
-import {SceneManager} from '../Scene/SceneManager';
-import {Renderer} from '../Renderer/Renderer'
 export class ProcessInput{
-    handleInput(sceneManager: SceneManager, render: Renderer){
-        document.addEventListener('keydown',(e)=>sceneManager.scenes[sceneManager.currentScene].onKeyDown(e));
-        document.addEventListener('keyup',(e)=>sceneManager.scenes[sceneManager.currentScene].onKeyUp());
-        document.addEventListener('mousedown',(e)=>sceneManager.scenes[sceneManager.currentScene].onMouseDown(e,render.canvas));
-        document.addEventListener('mouseup',(e)=>sceneManager.scenes[sceneManager.currentScene].onMouseUp());
+    inputKey : String;
+    mouseEvent : Array<number> | null;
+    constructor(){
+        this.inputKey = "";
+        this.mouseEvent = null;
+    }
+    onKeyDown(e: KeyboardEvent){
+        this.inputKey = e.code;
+    }
+    onKeyUp(){
+        this.inputKey = "";
+    }
+    onMouseDown(e: MouseEvent, canvas: HTMLCanvasElement) {
+        var rect = canvas.getBoundingClientRect();
+        var mouseX = e.clientX - rect.left;
+        var mouseY = e.clientY - rect.top;    
+        this.mouseEvent = [mouseX, mouseY];
+        console.log(this.mouseEvent);
+    }
+    onMouseUp() {
+        this.mouseEvent = null;
     }
 }

@@ -13,8 +13,8 @@ class Ground{
     update(time: number, deltaTime: number){
         for(var i=0;i<this.images.length;i++){
             this.images[i].x -= this.speed*(deltaTime/16.67);
-            if(this.images[i].x < - (650+20)){
-                this.images[i].x = this.images[Math.abs(i-1)].x+640;
+            if(this.images[i].x < - (650)){
+                this.images[i].x = this.images[Math.abs(i-1)].x+650;
             }
         } 
     }

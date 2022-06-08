@@ -1,21 +1,21 @@
 import { SceneManager } from "../Scene/SceneManager";
 import { Renderer } from "../Renderer/Renderer";
-import { ProcessInput } from "../ProcessInput/ProcessInput";
+import { ListenInput } from "../ProcessInput/ListenInput";
 import {ImageLoader } from "../ImageLoader/ImageLoader";
 export class Game{
     sceneManager: SceneManager;
     lastTime: number;
-    processInput: ProcessInput;
+    listenInput: ListenInput;
     loader: ImageLoader;
     constructor(sceneManager: SceneManager){
         this.sceneManager = sceneManager;
         this.lastTime = 0;
-        this.processInput = new ProcessInput();
+        this.listenInput = new ListenInput();
         this.loader = new ImageLoader();
     }
     
     start(render: Renderer){
-        this.processInput.handleInput(this.sceneManager, render);
+        this.listenInput.handleInput(this.sceneManager, render);
         requestAnimationFrame(()=>this.loop(render));
     }
     

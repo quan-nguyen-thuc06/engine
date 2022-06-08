@@ -9,10 +9,11 @@ import {PanelGameOver} from './PanelGameOver'
 import {Game} from '../Engine/Core/Game'
 import {ButtonObject} from '../Engine/ButtonObject/ButtonObject';
 
-const point = new Audio("../audio/point.mp3");
-const die = new Audio("../audio/die.mp3");
-const hit = new Audio("../audio/hit.mp3");
-const audioPlayer = new Audio("../audio/orchestrawav-26158.mp3");
+const point = new Audio("audio/point.mp3");
+const die = new Audio("audio/die.mp3");
+const hit = new Audio("audio/hit.mp3");
+const audioPlayer = new Audio("audio/orchestrawav-26158.mp3");
+const audio = new Audio("audio/swoosh.mp3");
 
 export class PlayScene extends Scene {
     bird: Bird;
@@ -89,18 +90,18 @@ export class PlayScene extends Scene {
             for (var i = 0; i <this.sprites.length; i++) {
                 if(this.sprites[i].name === "bird"){
                     for(var j = 0; j < pipes.length; j++) {
-                        if(this.Collision(pipes[j],this.sprites[i])){
+                        if(this.collision.handleCollision(pipes[j],this.sprites[i])){
                             this.checkPipe = true;
                             console.log("game over!");
                             break;
                         }
                     }
                     for (var k = 0; k < checkScore.length; k++) {
-                        if(this.Collision(checkScore[k],this.sprites[i])&& this.addScore != k){
+                        if(this.collision.handleCollision(checkScore[k],this.sprites[i])&& this.addScore != k){
                             this.score.setCurrentScore(this.score.getCurrentScore()+1);
                             this.textScore.content = "Score: " + this.score.getCurrentScore();
                             this.addScore = k;
-                            // point.play();
+                            point.play();
                             break;
                         }
                     }
@@ -109,31 +110,34 @@ export class PlayScene extends Scene {
                     });
                     this.sprites[i].update(time,deltaTime);
 
-                    if(this.inputKey==="Space") {
+                    if(this.processInput.inputKey==="Space") {
                         this.bird.fly(deltaTime);
+                        audio.play(); 
+                        audio.playbackRate = 2;
                     }
-                    else if(this.checkPipe&&(!this.Collision(ground[0], this.sprites[i])&&!this.Collision(ground[1], this.sprites[i])))
+                    else if(this.checkPipe&&(!this.collision.handleCollision(ground[0], this.sprites[i])&&!this.collision.handleCollision(ground[1], this.sprites[i])))
                         this.sprites[i].update(time,deltaTime);
                     
-                    if(this.Collision(ground[0], this.sprites[i])||this.Collision(ground[1], this.sprites[i])||this.checkPipe){
+                    if(this.collision.handleCollision(ground[0], this.sprites[i])||this.collision.handleCollision(ground[1], this.sprites[i])||this.checkPipe){
                         if(this.score.getCurrentScore()> this.score.getHighScore())
                             this.score.setHighScore(this.score.getCurrentScore());
-                        // show panelGameOver
-                        this.panelGameOver.setActive(true);
-                        // hiden bird
-                        this.bird.setActive(false);
                         // update score
                         this.panelGameOver.update(this.score.getCurrentScore(), this.score.getHighScore());
                         // set state bird is die
                         this.deadBird = true;
-
-                        // play audio
-                        // audioPlayer.pause();
-                        // hit.play();
-                        // setTimeout(function() {
-                        //     die.play();
-                        //   }, 500);
                         
+                        // play audio
+                        audioPlayer.pause();
+                        hit.play();
+                        // hiden bird
+                        setTimeout(()=> {
+                            this.bird.setActive(false);
+                        }, 100);
+                        setTimeout(() =>{
+                            // show panelGameOver
+                            this.panelGameOver.setActive(true);
+                            die.play();
+                        }, 500);
                     }
                 }
                 else
@@ -142,7 +146,7 @@ export class PlayScene extends Scene {
             this.pipes.update();
         }
         else if(this.deadBird){
-            if(this.inputKey !== ""||(this.mouseEvent!=null&& this.panelGameOver.replayButton.isInside(this.mouseEvent))){
+            if((this.processInput.mouseEvent!=null&& this.panelGameOver.replayButton.isInside(this.processInput.mouseEvent))){
                 this.deadBird = false;
                 this.panelGameOver.setActive(false); 
                 this.bird.setActive(true);  
@@ -150,7 +154,7 @@ export class PlayScene extends Scene {
             }
         }
         else if(!this.start){
-            if(this.inputKey === "Space")
+            if(this.processInput.inputKey === "Space")
                 this.start = true;
         }
     }
