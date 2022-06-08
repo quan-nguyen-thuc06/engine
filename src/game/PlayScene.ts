@@ -56,7 +56,7 @@ export class PlayScene extends Scene {
         this.bird.z_index = 2;
         this.bird.defaultPosition = [this.bird.x, this.bird.y];
         
-        this.textDescription = new TextObject();
+        this.textDescription = new TextObject(this);
         // set attributes
         this.textDescription.x = 140;
         this.textDescription.y = 450;
@@ -67,7 +67,7 @@ export class PlayScene extends Scene {
         this.textDescription.setActive(false);
         this.textDescription.defaultPosition = [140,450];
 
-        this.textScore = new TextObject();
+        this.textScore = new TextObject(this);
         this.textScore.x = 10;
         this.textScore.y = 30;
         this.textScore.content = "Score: "+ this.score.getCurrentScore();
@@ -76,17 +76,17 @@ export class PlayScene extends Scene {
         this.textScore.z_index = 2;
         this.textScore.defaultPosition = [10,30];
 
-        var bg = new ImageObject(game.loader.getImage("background"));
+        var bg = new ImageObject(this,"background");
         // set attributes
         bg.width = 700;
         bg.height = 800;
         bg.name = "background";
 
-        this.ground = new Ground(4,game);
-        this.pipes = new ListPairOfPipes(game);
+        this.ground = new Ground(this,4);
+        this.pipes = new ListPairOfPipes(this);
 
         // init panelGameOver
-        var imgGameOver = new ImageObject(game.loader.getImage("gameover"));
+        var imgGameOver = new ImageObject(this,"gameover");
         imgGameOver.x = 60;
         imgGameOver.y = 300;
         imgGameOver.width = 500;
@@ -94,7 +94,7 @@ export class PlayScene extends Scene {
         imgGameOver.z_index = 3;
         imgGameOver.defaultPosition = [60,300];
 
-        var textCurrentScore = new TextObject();
+        var textCurrentScore = new TextObject(this);
         textCurrentScore.x = 110;
         textCurrentScore.y = 470;
         textCurrentScore.content = "Score: 0";
@@ -103,7 +103,7 @@ export class PlayScene extends Scene {
         textCurrentScore.z_index = 3;
         textCurrentScore.defaultPosition = [110,470];
 
-        var textHighScore = new TextObject();
+        var textHighScore = new TextObject(this);
         textHighScore.x = 330;
         textHighScore.y = 470;
         textHighScore.content = "High Score: 0";
@@ -112,7 +112,7 @@ export class PlayScene extends Scene {
         textHighScore.z_index = 3;
         textHighScore.defaultPosition = [330,470]
 
-        var buttonReplay = new ButtonObject(game.loader.getImage("replayButton"));
+        var buttonReplay = new ButtonObject(this,"replayButton");
         buttonReplay.x = 225;
         buttonReplay.y = 500;
         buttonReplay.width = 160;

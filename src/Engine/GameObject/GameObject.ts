@@ -1,3 +1,5 @@
+import { Scene } from "../Scene/Scene";
+
 export class GameObject{
     x: number;
     y: number;
@@ -7,7 +9,8 @@ export class GameObject{
     active: boolean;
     defaultPosition: Array<number>;
     z_index: number;
-    constructor() {
+    scene: Scene;
+    constructor(scene: Scene) {
         this.x = 0;
         this.y = 0;
         this.width = 0;
@@ -16,6 +19,7 @@ export class GameObject{
         this.active = true;
         this.z_index = 0;
         this.defaultPosition = [0,0];
+        this.scene = scene;
     }
     reset(){
         this.x = this.defaultPosition[0];

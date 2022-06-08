@@ -1,12 +1,13 @@
 import {GameObject} from "../GameObject/GameObject"
+import { Scene } from "../Scene/Scene";
 export class Sprite extends GameObject{
     images: Array<HTMLImageElement>;
     degrees: number;
     frameCurrent: number;
     rate: number;
     adt: number;
-    constructor(images: Array<HTMLImageElement>){
-        super();
+    constructor(scene: Scene,images: Array<HTMLImageElement>){
+        super(scene);
         console.log("images",images);
         this.images = images;
         this.degrees = 0;

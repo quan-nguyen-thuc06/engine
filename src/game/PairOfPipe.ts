@@ -1,5 +1,6 @@
 import { ImageObject } from "../Engine/ImageObject/ImageObject";
 import {Game} from "../Engine/Core/Game"
+import { Scene } from "../Engine/Scene/Scene";
 const blanks = 200;
 const pipeHeight = 350;
 const numPipe = 4;
@@ -8,8 +9,8 @@ const pipeWidth = 80;
 class PairOfPipe{
     Pipes: Array<ImageObject>;
     private speed: number;
-    constructor(x:number, y:number, game: Game,speed: number){
-        var PipeUp = new ImageObject(game.loader.getImage("pipe") as HTMLImageElement);
+    constructor(scene: Scene,x:number, y:number,speed: number){
+        var PipeUp = new ImageObject(scene,"pipe");
         // set attributes
         PipeUp.x = x;
         PipeUp.y = y;
@@ -21,7 +22,7 @@ class PairOfPipe{
         // set defaultPosition
         PipeUp.defaultPosition = [x,y];
 
-        var PipeDown = new ImageObject(game.loader.getImage("pipe") as HTMLImageElement);
+        var PipeDown = new ImageObject(scene,"pipe");
         // set attributes
         PipeDown.x = x;
         PipeDown.y = y+pipeHeight+blanks;
@@ -32,7 +33,7 @@ class PairOfPipe{
         // set defaultPosition
         PipeDown.defaultPosition = [x,y+pipeHeight+blanks];
 
-        var checkScore = new ImageObject(null);
+        var checkScore = new ImageObject(scene,"null");
         // set attributes
         checkScore.x = x+pipeWidth;
         checkScore.y = y+pipeHeight;
@@ -63,12 +64,12 @@ class PairOfPipe{
 
 class ListPairOfPipes{
     listPipe: PairOfPipe[];
-    constructor(game: Game){
+    constructor(scene: Scene){
         this.listPipe = [];
         for(var i=0;i<numPipe;i++){
             var x = i*distance + pipeWidth + 400;
             var y = Math.floor(Math.random() *-200);
-            var pipe = new PairOfPipe(x,y,game,4);
+            var pipe = new PairOfPipe(scene,x,y,4);
             this.listPipe.push(pipe);
         }
     }

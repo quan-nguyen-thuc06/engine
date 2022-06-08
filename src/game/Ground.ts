@@ -1,11 +1,11 @@
 import { ImageObject } from "../Engine/ImageObject/ImageObject";
 import {Game} from "../Engine/Core/Game";
+import { Scene } from "../Engine/Scene/Scene";
 class Ground{
     images: Array<ImageObject>;
     speed: number;
-    constructor(speed: number, game: Game){
-        var image = game.loader.getImage("ground");
-        var imageObject1 = new ImageObject(image as HTMLImageElement);
+    constructor(scene: Scene ,speed: number){
+        var imageObject1 = new ImageObject(scene,"ground");
         imageObject1.name = "ground";
         imageObject1.z_index =2;
         imageObject1.y = 670;
@@ -13,7 +13,7 @@ class Ground{
         imageObject1.height = 150;
         imageObject1.defaultPosition= [0,670];
 
-        var imageObject2 = new ImageObject(image as HTMLImageElement);
+        var imageObject2 = new ImageObject(scene,"ground");
         imageObject2.name = "ground";
         imageObject2.z_index =2;
         imageObject2.x = 649;

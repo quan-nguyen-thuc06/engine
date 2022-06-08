@@ -11,7 +11,7 @@ export class Bird extends Sprite {
             let name =  "bird" + i;
             images.push(scene.game.loader.getImage(name) as HTMLImageElement);
         } 
-        super(images);
+        super(scene,images);
         this.name = "bird";
         this.gravity = 0;
         this.speed = 0;

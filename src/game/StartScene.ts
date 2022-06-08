@@ -11,13 +11,13 @@ export class StartScene extends Scene {
     buttonStart: ButtonObject
     constructor(game: Game){
         super(game);
-        this.background =new ImageObject(game.loader.getImage("background") as HTMLImageElement);
+        this.background =new ImageObject(this,"background");
         // set attributes
         this.background.width = 700;
         this.background.height = 800;
         this.background.name = "background"
 
-        this.imgStart = new ImageObject(game.loader.getImage("message") as HTMLImageElement);
+        this.imgStart = new ImageObject(this,"message");
         // set attributes
         this.imgStart.width =500,
         this.imgStart.height = 700;
@@ -25,13 +25,13 @@ export class StartScene extends Scene {
         this.imgStart.y = 20;
         this.imgStart.z_index = 2;
 
-        this.buttonStart = new ButtonObject(null);
+        this.buttonStart = new ButtonObject(this,"null");
         // set attributes
         this.buttonStart.width = 700;
         this.buttonStart.height = 800;
         this.buttonStart.name = "buttonStart";
 
-        this.ground = new Ground(2,game)
+        this.ground = new Ground(this,2)
         var imageObjects = [this.background].concat(this.ground.getComponent());
         imageObjects.push(this.imgStart);
         this.addChild(imageObjects);
