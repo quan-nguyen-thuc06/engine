@@ -76,7 +76,7 @@ export class PlayScene extends Scene {
         this.textScore.z_index = 2;
         this.textScore.defaultPosition = [10,30];
 
-        var bg = new ImageObject(game.loader.getImage("background") as HTMLImageElement);
+        var bg = new ImageObject(game.loader.getImage("background"));
         // set attributes
         bg.width = 700;
         bg.height = 800;
@@ -86,7 +86,7 @@ export class PlayScene extends Scene {
         this.pipes = new ListPairOfPipes(game);
 
         // init panelGameOver
-        var imgGameOver = new ImageObject(game.loader.getImage("gameover") as HTMLImageElement);
+        var imgGameOver = new ImageObject(game.loader.getImage("gameover"));
         imgGameOver.x = 60;
         imgGameOver.y = 300;
         imgGameOver.width = 500;
@@ -112,7 +112,7 @@ export class PlayScene extends Scene {
         textHighScore.z_index = 3;
         textHighScore.defaultPosition = [330,470]
 
-        var buttonReplay = new ButtonObject(game.loader.getImage("replayButton") as HTMLImageElement);
+        var buttonReplay = new ButtonObject(game.loader.getImage("replayButton"));
         buttonReplay.x = 225;
         buttonReplay.y = 500;
         buttonReplay.width = 160;

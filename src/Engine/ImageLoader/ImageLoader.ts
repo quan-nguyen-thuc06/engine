@@ -12,9 +12,9 @@ export class ImageLoader {
             img.onerror = reject; 
         })
     }
-    getImage(name: string): HTMLImageElement | undefined{
+    getImage(name: string): HTMLImageElement {
         if(this.images.has(name))
-            return this.images.get(name);
+            return this.images.get(name)!;
         return new Image();
     }
 }
