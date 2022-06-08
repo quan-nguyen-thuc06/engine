@@ -24,12 +24,13 @@ export class Scene{
     }
     addChild(gameObjects: GameObject[]){
         gameObjects.map((gameObject)=>{this.gameObjects.push(gameObject)})
-        this.gameObjects.sort((a,b)=>{
-            return a.z_index - b.z_index;
-        })
     }
 
     render(render: Renderer){
+        // sort gameObjects following z_index
+        this.gameObjects.sort((a,b)=>{
+            return a.z_index - b.z_index;
+        })
         for (var i = 0; i <this.gameObjects.length; i++) {
             if(this.gameObjects[i].getActive()){
                 const obj = this.gameObjects[i]; 

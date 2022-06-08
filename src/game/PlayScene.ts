@@ -101,7 +101,8 @@ export class PlayScene extends Scene {
             this.pipes.listPipe.map((pipe) => {
                 pipe.update(time, deltaTime);
             });
-
+            this.pipes.update();
+            
             if(this.processInput.inputKey==="Space") {
                 this.bird.fly(deltaTime);
                 audio.play(); 
