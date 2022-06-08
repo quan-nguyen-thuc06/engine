@@ -12,12 +12,12 @@ export class StartScene extends Scene {
     constructor(game: Game){
         super(game);
         this.background =new ImageObject(0,0,700,800,game.loader.getImage("background") as HTMLImageElement,0,"background");
-        this.imgStart = new ImageObject(50,20,500,700,game.loader.getImage("message") as HTMLImageElement,0,"");
+        this.imgStart = new ImageObject(50,20,500,700,game.loader.getImage("message") as HTMLImageElement,0,"",2);
         this.buttonStart = new ButtonObject(0,0,700,800,null,0,"buttonStart");
         this.ground = new Ground(2,game)
-        var imageObjects = [this.background].concat(this.ground.getComponent()["imageObjects"]);
+        var imageObjects = [this.background].concat(this.ground.getComponent());
         imageObjects.push(this.imgStart);
-        this.addChild(imageObjects,[],[]);
+        this.addChild(imageObjects);
     }
     update(time: number, deltaTime: number){
         this.ground.update(time, deltaTime);

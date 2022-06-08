@@ -5,8 +5,8 @@ export class Sprite extends GameObject{
     frameCurrent: number;
     rate: number;
     adt: number;
-    constructor(x: number, y: number, width: number, height: number, images: Array<HTMLImageElement>,degrees: number,name: string, fps: number){
-        super(x, y, width, height,name);
+    constructor(x: number, y: number, width: number, height: number, images: Array<HTMLImageElement>,degrees: number,name: string, fps: number, z_index: number =0){
+        super(x, y, width, height,name,true,z_index);
         console.log("images",images);
         this.images = images;
         this.degrees = degrees;

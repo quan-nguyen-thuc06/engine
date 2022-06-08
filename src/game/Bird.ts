@@ -4,14 +4,14 @@ import {Scene} from "../Engine/Scene/Scene"
 export class Bird extends Sprite {
     gravity : number;
     speed : number; 
-    constructor(x: number, y: number, width: number, height: number,degrees: number,gravity: number,rate: number, scene: Scene) {
+    constructor(x: number, y: number, width: number, height: number,degrees: number,gravity: number,rate: number, scene: Scene, z_index: number =0) {
         var images:Array<HTMLImageElement> = [];
         // console.log("loader", scene.game.loader);
         for (var i = 0; i <8;i++){
             let name =  "bird" + i;
             images.push(scene.game.loader.getImage(name) as HTMLImageElement);
         } 
-        super(x, y, width, height,images,degrees,"bird",rate);
+        super(x, y, width, height,images,degrees,"bird",rate, z_index);
         this.gravity = gravity;
         this.speed = 0;
     }

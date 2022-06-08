@@ -10,9 +10,9 @@ class PairOfPipe{
     private speed: number;
 
     constructor(x:number, y:number, game: Game,speed: number){
-        var PipeUp = new ImageObject(x,y,pipeWidth,pipeHeight,game.loader.getImage("pipe") as HTMLImageElement,180,"pipe");
-        var PipeDown = new ImageObject(x,y+pipeHeight+blanks,pipeWidth,pipeHeight,game.loader.getImage("pipe") as HTMLImageElement,0,"pipe");
-        var checkScore = new ImageObject(x+pipeWidth,y+pipeHeight,10,blanks,null,0,"checkScore");
+        var PipeUp = new ImageObject(x,y,pipeWidth,pipeHeight,game.loader.getImage("pipe") as HTMLImageElement,180,"pipe",1);
+        var PipeDown = new ImageObject(x,y+pipeHeight+blanks,pipeWidth,pipeHeight,game.loader.getImage("pipe") as HTMLImageElement,0,"pipe",1);
+        var checkScore = new ImageObject(x+pipeWidth,y+pipeHeight,10,blanks,null,0,"checkScore",1);
         this.Pipes= [PipeUp,PipeDown,checkScore];
         this.speed = speed;
     }
@@ -27,11 +27,7 @@ class PairOfPipe{
         }
     }
     getComponent(){
-        return {
-            "imageObjects": this.Pipes,
-            "sprites": [],
-            "textObjects": []
-        }
+        return this.Pipes;
     }
 }
 

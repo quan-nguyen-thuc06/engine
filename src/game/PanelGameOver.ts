@@ -20,11 +20,7 @@ export class PanelGameOver {
         this.replayButton.setActive(active);
     }
     getComponent(){
-        return {
-            "imageObjects": [this.imgGameOver, this.replayButton],
-            "sprites":[],
-            "textObjects":[this.currentScore,this.highScore]
-        };
+        return [this.imgGameOver, this.replayButton, this.currentScore, this.highScore];
     }
     update(currentScore: number, highScore: number){
         this.currentScore.setContent("Score: " + currentScore);

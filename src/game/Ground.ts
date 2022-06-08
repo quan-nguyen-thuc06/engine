@@ -5,8 +5,8 @@ class Ground{
     speed: number;
     constructor(speed: number, game: Game){
         var image = game.loader.getImage("ground");
-        var imageObject1 = new ImageObject(0,670,650,150,image as HTMLImageElement,0,"ground");
-        var imageObject2 = new ImageObject(649,670,650,150,image as HTMLImageElement,0,"ground");
+        var imageObject1 = new ImageObject(0,670,650,150,image as HTMLImageElement,0,"ground",2);
+        var imageObject2 = new ImageObject(649,670,650,150,image as HTMLImageElement,0,"ground",2);
         this.images = [imageObject1,imageObject2];
         this.speed = speed;
     }
@@ -19,11 +19,7 @@ class Ground{
         } 
     }
     getComponent(){
-        return {
-            "imageObjects": this.images,
-            "sprites": [],
-            "textObjects": []
-        };
+        return this.images;
     }
     reset(){
         for(var i=0;i<this.images.length;i++){

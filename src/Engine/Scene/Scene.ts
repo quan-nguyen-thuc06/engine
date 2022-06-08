@@ -7,67 +7,47 @@ import { ProcessInput } from "../ProcessInput/ProcessInput";
 import { Game } from "../Core/Game";
 import { Collision } from "../Collision/Collision";
 export class Scene{
-    imageObjects: ImageObject[];
-    sprites: Sprite[];
-    textObjects: TextObject[]; 
+    gameObjects: GameObject[];
     processInput: ProcessInput;
     collision: Collision;
     game: Game;
     constructor(game: Game){
-        this.imageObjects = [];
-        this.sprites = [];
-        this.textObjects = [];
+        this.gameObjects = [];
         this.processInput = new ProcessInput();
         this.collision = new Collision();
         this.game = game;
     }
     resetScene(){
-        for(var i = 0; i < this.imageObjects.length;i++){
-            this.imageObjects[i].reset();
-        }
-        for (var i = 0; i <this.sprites.length; i++) {
-            this.sprites[i].reset();
+        for (var i = 0; i <this.gameObjects.length; i++) {
+            this.gameObjects[i].reset();
         }
     }
-    addChild(imageObjects: ImageObject[],sprites: Sprite[], textObjects: TextObject[]){
-        imageObjects.map(imageObject => this.imageObjects.push(imageObject));
-        sprites.map(sprite => this.sprites.push(sprite));
-        textObjects.map(textObject => this.textObjects.push(textObject));
-    }
-    removeChild(imageObjects: ImageObject[],sprites: Sprite[]){
-        imageObjects.map(imageObject => {
-            this.imageObjects = this.imageObjects.filter((imb)=>{
-                return imb!= imageObject;
-            })
-        })
-        sprites.map(sprite => {
-            this.sprites = this.sprites.filter((spt)=>{
-                return spt!= sprite;
-            })
+    addChild(gameObjects: GameObject[]){
+        gameObjects.map((gameObject)=>{this.gameObjects.push(gameObject)})
+        this.gameObjects.sort((a,b)=>{
+            return a.z_index - b.z_index;
         })
     }
 
     render(render: Renderer){
-        this.imageObjects.map((imageObject)=>{
-            if(imageObject.getActive())
-                render.drawImage(imageObject);
-        })
-        this.sprites.map((sprite)=>{
-            if(sprite.getActive())
-                render.drawSprite(sprite);
-        })
-        this.textObjects.map((txt)=>{
-            if(txt.getActive())
-                render.drawText(txt);
-        })
+        for (var i = 0; i <this.gameObjects.length; i++) {
+            if(this.gameObjects[i].getActive()){
+                const obj = this.gameObjects[i]; 
+                if( obj instanceof ImageObject)
+                    render.drawImage(obj);
+                else if(obj instanceof Sprite)
+                    render.drawSprite(obj);
+                else if(obj instanceof TextObject)
+                    render.drawText(obj);
+            }
+        }
     }
     // xu ly logic
     update(time: number, delta: number) {
-        for (var i = 0; i <this.imageObjects.length; i++) {
-            this.imageObjects[i].update(time, delta);
-        }
-        for (var i = 0; i <this.sprites.length; i++) {
-            this.sprites[i].update(time, delta);
+        for (var i = 0; i <this.gameObjects.length; i++) {
+            var obj = this.gameObjects[i];
+            if (obj instanceof ImageObject || obj instanceof Sprite)
+                obj.update(time, delta);
         }
     }
 }
