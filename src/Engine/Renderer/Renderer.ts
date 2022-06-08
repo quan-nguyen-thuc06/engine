@@ -23,7 +23,7 @@ export class Renderer{
             ctx.save();
             ctx.translate(sprite.x + sprite.width/2,sprite.y + sprite.height/2)
             ctx.rotate(sprite.degrees*Math.PI/180);
-            ctx.drawImage(sprite.images[sprite.fameCurrent],-sprite.width/2, -sprite.height/2,sprite.width,sprite.height);
+            ctx.drawImage(sprite.images[sprite.frameCurrent],-sprite.width/2, -sprite.height/2,sprite.width,sprite.height);
             ctx.restore();
         }
     }

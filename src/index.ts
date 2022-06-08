@@ -64,7 +64,7 @@ const imagesLoad = [
     },
     {
         "key": "background",
-        "path": "/Images/tan.png"
+        "path": "/Images/background/background-night.png"
     }
 ]
 

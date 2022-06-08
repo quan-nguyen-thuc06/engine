@@ -3,7 +3,7 @@ import { ImageObject } from '../Engine/ImageObject/ImageObject';
 import { ButtonObject } from '../Engine/ButtonObject/ButtonObject';
 import {Ground} from "./Ground"
 import { Game } from '../Engine/Core/Game';
-const fps = 60;
+
 export class StartScene extends Scene {
     background: ImageObject;
     ground: Ground;

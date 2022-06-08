@@ -34,7 +34,7 @@ export class Bird extends Sprite {
     fly(deltaTime: number){
         // audio.play(); 
         // audio.playbackRate = 2;
-        this.speed = -10;
+        this.speed = -8;
     }
     reset(){
         super.reset();
