@@ -5,9 +5,9 @@ import { Game } from "./Engine/Core/Game";
 import {PlayScene} from "./game/PlayScene";
 
 var canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
+var myGame = new Game();
 var render = new Renderer(canvas)
-var gameScene = new SceneManager();
-var myGame = new Game(gameScene);
+var gameScene = new SceneManager(myGame);
 
 const imagesLoad = [
     {
@@ -70,9 +70,9 @@ const imagesLoad = [
 
 const promises = imagesLoad.map((image) => myGame.loader.addImage(image["path"], image["key"]))
 Promise.all(promises).then(()=> {
-    var startScene = new StartScene(myGame);
-    var playScene = new PlayScene(myGame);
+    var startScene = new StartScene(gameScene);
+    var playScene = new PlayScene(gameScene);
     gameScene.addScene(startScene);
     gameScene.addScene(playScene);
-    myGame.start(render);
+    myGame.start(render, gameScene);
 }).catch((error) => {console.log(error)})

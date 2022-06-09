@@ -7,7 +7,7 @@ export class ImageObject extends GameObject{
         super(scene);
         if(key=="null")
             this.image = new Image();
-        else this.image = this.scene.game.loader.getImage(key);
+        else this.image = this.scene.sceneManager.game.loader.getImage(key);
         this.degrees = 0;
     }
     update(time: number, deltaTime:number){}

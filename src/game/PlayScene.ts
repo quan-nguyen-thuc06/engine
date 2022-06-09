@@ -9,6 +9,7 @@ import {PanelGameOver} from './PanelGameOver'
 import {Game} from '../Engine/Core/Game'
 import {ButtonObject} from '../Engine/ButtonObject/ButtonObject';
 import { GameObject } from '../Engine/GameObject/GameObject';
+import { SceneManager } from '../Engine/Scene/SceneManager';
 
 const point = new Audio("audio/point.mp3");
 const die = new Audio("audio/die.mp3");
@@ -33,8 +34,8 @@ export class PlayScene extends Scene {
     panelGameOver : PanelGameOver;
     start: boolean;
     pause: boolean;
-    constructor(game: Game){
-        super(game);
+    constructor(sceneManager : SceneManager){
+        super(sceneManager);
         // play audio
         // audioPlayer.play();
         // audioPlayer.loop =true;
@@ -206,7 +207,7 @@ export class PlayScene extends Scene {
             if((this.processInput.inputKey === "Enter"||this.processInput.mouseEvent!=null&& this.panelGameOver.replayButton.isInside(this.processInput.mouseEvent))){
                 this.deadBird = false;
                 this.panelGameOver.setActive(false); 
-                this.game.sceneManager.switchScene(1);
+                this.sceneManager.switchScene(1);
             }
         }
         else if(!this.start){

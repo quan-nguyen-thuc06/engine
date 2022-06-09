@@ -9,7 +9,7 @@ export class Bird extends Sprite {
         // console.log("loader", scene.game.loader);
         for (var i = 0; i <8;i++){
             let name =  "bird" + i;
-            images.push(scene.game.loader.getImage(name) as HTMLImageElement);
+            images.push(scene.sceneManager.game.loader.getImage(name) as HTMLImageElement);
         } 
         super(scene,images);
         this.name = "bird";
@@ -34,7 +34,7 @@ export class Bird extends Sprite {
     }
 
     fly(){
-        this.speed = -7;
+        this.speed = -8;
     }
     reset(){
         super.reset();

@@ -4,18 +4,18 @@ import { TextObject } from "../TextObject/TextObject";
 import {Renderer} from "../Renderer/Renderer";
 import {GameObject} from "../GameObject/GameObject";
 import { ProcessInput } from "../ProcessInput/ProcessInput";
-import { Game } from "../Core/Game";
 import { Collision } from "../Collision/Collision";
+import { SceneManager } from "./SceneManager";
 export class Scene{
     gameObjects: GameObject[];
     processInput: ProcessInput;
     collision: Collision;
-    game: Game;
-    constructor(game: Game){
+    sceneManager : SceneManager;
+    constructor(sceneManager : SceneManager){
         this.gameObjects = [];
         this.processInput = new ProcessInput();
         this.collision = new Collision();
-        this.game = game;
+        this.sceneManager = sceneManager;
     }
     resetScene(){
         for (var i = 0; i <this.gameObjects.length; i++) {

@@ -2,15 +2,15 @@ import {Scene} from '../Engine/Scene/Scene';
 import { ImageObject } from '../Engine/ImageObject/ImageObject';
 import { ButtonObject } from '../Engine/ButtonObject/ButtonObject';
 import {Ground} from "./Ground"
-import { Game } from '../Engine/Core/Game';
+import { SceneManager } from '../Engine/Scene/SceneManager';
 
 export class StartScene extends Scene {
     background: ImageObject;
     ground: Ground;
     imgStart: ImageObject;
     buttonStart: ButtonObject
-    constructor(game: Game){
-        super(game);
+    constructor(sceneManager : SceneManager){
+        super(sceneManager);
         this.background =new ImageObject(this,"background");
         // set attributes
         this.background.width = 700;
@@ -39,7 +39,7 @@ export class StartScene extends Scene {
     update(time: number, deltaTime: number){
         this.ground.update(time, deltaTime);
         if(this.processInput.inputKey === "Enter"||this.processInput.inputKey === "Space" ||(this.processInput.mouseEvent!=null && this.buttonStart.isInside(this.processInput.mouseEvent))) {
-            this.game.sceneManager.switchScene(1)
+            this.sceneManager.switchScene(1)
             return 1;
         }
 
