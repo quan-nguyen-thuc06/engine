@@ -1,3 +1,4 @@
+import { GameObject } from "../GameObject/GameObject";
 import { ImageObject } from "../ImageObject/ImageObject";
 import { Sprite } from "../Sprite/Sprite";
 import { TextObject } from "../TextObject/TextObject";
@@ -33,6 +34,23 @@ export class Renderer{
             ctx.font = text.font;
             ctx.fillStyle = text.color;
             ctx.fillText(text.content,text.x,text.y);
+        }
+    }
+
+    renderObject(gameObjects: GameObject[]){
+        gameObjects.sort((a,b)=>{
+            return a.z_index - b.z_index;
+        })
+        for (var i = 0; i <gameObjects.length; i++) {
+            if(gameObjects[i].getActive()){
+                const obj = gameObjects[i]; 
+                if( obj instanceof ImageObject)
+                    this.drawImage(obj);
+                else if(obj instanceof Sprite)
+                    this.drawSprite(obj);
+                else if(obj instanceof TextObject)
+                    this.drawText(obj);
+            }
         }
     }
 }

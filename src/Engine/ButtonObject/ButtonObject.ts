@@ -4,8 +4,8 @@ export class ButtonObject extends ImageObject{
     constructor(scene: Scene, key: string){
         super(scene,key);
     }
-    isInside(pos: Array<number>){
-        if(pos.length < 2) return false;
-        return pos[0] > this.x && pos[0] < this.x+this.width && pos[1] < this.y+this.height && pos[1] > this.y;
+    isInside(MousePos: Array<number>){
+        if(MousePos.length < 2) return false;
+        return MousePos[0] > this.x && MousePos[0] < this.x+this.width && MousePos[1] < this.y+this.height && MousePos[1] > this.y;
     }    
 }

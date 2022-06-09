@@ -26,23 +26,6 @@ export class Scene{
         gameObjects.map((gameObject)=>{this.gameObjects.push(gameObject)})
     }
 
-    render(render: Renderer){
-        // sort gameObjects following z_index
-        this.gameObjects.sort((a,b)=>{
-            return a.z_index - b.z_index;
-        })
-        for (var i = 0; i <this.gameObjects.length; i++) {
-            if(this.gameObjects[i].getActive()){
-                const obj = this.gameObjects[i]; 
-                if( obj instanceof ImageObject)
-                    render.drawImage(obj);
-                else if(obj instanceof Sprite)
-                    render.drawSprite(obj);
-                else if(obj instanceof TextObject)
-                    render.drawText(obj);
-            }
-        }
-    }
     // xu ly logic
     update(time: number, delta: number) {
         for (var i = 0; i <this.gameObjects.length; i++) {
