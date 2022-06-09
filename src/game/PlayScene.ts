@@ -201,7 +201,7 @@ export class PlayScene extends Scene {
         }
         else if(this.deadBird){
             if(!this.collision.handleCollision(this.ground.getComponent()[0], this.bird)&&!this.collision.handleCollision(this.ground.getComponent()[1], this.bird)){
-                this.bird.speed = 100;
+                this.bird.speed  = 10;
                 this.bird.update(time, deltaTime);
             }
             if((this.processInput.inputKey === "Enter"||this.processInput.mouseEvent!=null&& this.panelGameOver.replayButton.isInside(this.processInput.mouseEvent))){
