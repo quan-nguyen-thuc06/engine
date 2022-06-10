@@ -1,13 +1,13 @@
 import {Scene} from '../Engine/Scene/Scene';
 import {Bird} from './Bird';
 import {ListPairOfPipes} from './PairOfPipe';
-import {TextObject } from '../Engine/TextObject/TextObject';
-import {ImageObject } from '../Engine/ImageObject/ImageObject';
+import {TextObject } from '../Engine/GameObject/TextObject';
+import {ImageObject } from '../Engine/GameObject/ImageObject';
 import {Score} from "./Score";
 import {Ground } from './Ground';
 import {PanelGameOver} from './PanelGameOver'
 import {Game} from '../Engine/Core/Game'
-import {ButtonObject} from '../Engine/ButtonObject/ButtonObject';
+import {ButtonObject} from '../Engine/GameObject/ButtonObject';
 import { GameObject } from '../Engine/GameObject/GameObject';
 import { SceneManager } from '../Engine/Scene/SceneManager';
 

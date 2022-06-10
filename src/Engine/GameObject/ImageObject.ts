@@ -1,4 +1,4 @@
-import {GameObject} from "../GameObject/GameObject"
+import {GameObject} from "./GameObject"
 import { Scene } from "../Scene/Scene";
 export class ImageObject extends GameObject{
     image: HTMLImageElement;
@@ -10,5 +10,5 @@ export class ImageObject extends GameObject{
         else this.image = this.scene.sceneManager.game.loader.getImage(key);
         this.degrees = 0;
     }
-    update(time: number, deltaTime:number){}
+    
 }

@@ -1,4 +1,4 @@
-import {GameObject} from "../GameObject/GameObject"
+import {GameObject} from "./GameObject"
 import { Scene } from "../Scene/Scene";
 export class Sprite extends GameObject{
     images: Array<HTMLImageElement>;
@@ -14,9 +14,6 @@ export class Sprite extends GameObject{
         this.frameCurrent = 0;
         this.rate = 0;
         this.adt = 0;
-    }
-    update(time: number, deltaTime:number){
-
     }
 
     playAnimation(time: number, deltaTime:number) {

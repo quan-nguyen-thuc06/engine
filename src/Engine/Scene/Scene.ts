@@ -1,6 +1,6 @@
-import { ImageObject } from "../ImageObject/ImageObject";
-import { Sprite } from "../Sprite/Sprite";
-import { TextObject } from "../TextObject/TextObject";
+import { ImageObject } from "../GameObject/ImageObject";
+import { Sprite } from "../GameObject/Sprite";
+import { TextObject } from "../GameObject/TextObject";
 import {Renderer} from "../Renderer/Renderer";
 import {GameObject} from "../GameObject/GameObject";
 import { ProcessInput } from "../ProcessInput/ProcessInput";

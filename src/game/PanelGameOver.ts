@@ -1,6 +1,6 @@
-import { TextObject } from '../Engine/TextObject/TextObject';
-import {ButtonObject } from '../Engine/ButtonObject/ButtonObject';
-import { ImageObject } from '../Engine/ImageObject/ImageObject';
+import { TextObject } from '../Engine/GameObject/TextObject';
+import {ButtonObject } from '../Engine/GameObject/ButtonObject';
+import { ImageObject } from '../Engine/GameObject/ImageObject';
 
 export class PanelGameOver {
     imgGameOver: ImageObject;

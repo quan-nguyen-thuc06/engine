@@ -1,4 +1,4 @@
-import { ImageObject } from "../Engine/ImageObject/ImageObject";
+import { ImageObject } from "../Engine/GameObject/ImageObject";
 import {Game} from "../Engine/Core/Game";
 import { Scene } from "../Engine/Scene/Scene";
 class Ground{

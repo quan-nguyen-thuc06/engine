@@ -31,5 +31,5 @@ export class GameObject{
     getActive(){
         return this.active;
     }
-
+    update(time: number, deltaTime:number){}
 }

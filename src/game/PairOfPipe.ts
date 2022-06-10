@@ -1,5 +1,4 @@
-import { ImageObject } from "../Engine/ImageObject/ImageObject";
-import {Game} from "../Engine/Core/Game"
+import { ImageObject } from "../Engine/GameObject/ImageObject";
 import { Scene } from "../Engine/Scene/Scene";
 const blanks = 200;
 const pipeHeight = 350;

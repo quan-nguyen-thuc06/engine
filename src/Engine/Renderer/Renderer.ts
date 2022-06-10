@@ -1,7 +1,7 @@
 import { GameObject } from "../GameObject/GameObject";
-import { ImageObject } from "../ImageObject/ImageObject";
-import { Sprite } from "../Sprite/Sprite";
-import { TextObject } from "../TextObject/TextObject";
+import { ImageObject } from "../GameObject/ImageObject";
+import { Sprite } from "../GameObject/Sprite";
+import { TextObject } from "../GameObject/TextObject";
 
 export class Renderer{
     canvas: HTMLCanvasElement;

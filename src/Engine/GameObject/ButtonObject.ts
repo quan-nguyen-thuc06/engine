@@ -1,4 +1,4 @@
-import { ImageObject} from "../ImageObject/ImageObject";
+import { ImageObject} from "./ImageObject";
 import { Scene } from "../Scene/Scene";
 export class ButtonObject extends ImageObject{
     constructor(scene: Scene, key: string){

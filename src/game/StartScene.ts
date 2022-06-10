@@ -1,6 +1,6 @@
 import {Scene} from '../Engine/Scene/Scene';
-import { ImageObject } from '../Engine/ImageObject/ImageObject';
-import { ButtonObject } from '../Engine/ButtonObject/ButtonObject';
+import { ImageObject } from '../Engine/GameObject/ImageObject';
+import { ButtonObject } from '../Engine/GameObject/ButtonObject';
 import {Ground} from "./Ground"
 import { SceneManager } from '../Engine/Scene/SceneManager';
 

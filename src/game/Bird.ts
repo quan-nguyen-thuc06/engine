@@ -1,4 +1,4 @@
-import { Sprite } from "../Engine/Sprite/Sprite";
+import { Sprite } from "../Engine/GameObject/Sprite";
 
 import {Scene} from "../Engine/Scene/Scene"
 export class Bird extends Sprite {
